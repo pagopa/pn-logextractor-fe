@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+// import { Provider } from 'react-redux';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { theme } from '@pagopa/mui-italia';
+
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+// import { store } from './redux/store';
+// import "./i18n.ts"
+import App from './App';
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    {/* <Provider store={store}> */}
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Suspense fallback="loading...">
+            <App />
+          </Suspense>
+        </ThemeProvider>
+      </BrowserRouter>
+    {/* </Provider>   */}
   </React.StrictMode>
 );
 
