@@ -1,14 +1,14 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import Header from './Components/Header';
-import SnackbarComponent from './Components/SnackbarComponent';
-import ResponseData from './Components/ResponseData';
-import Form from './Components/Form';
-import Page from './Components/Page'
+import Page from './Pages/SearchPage'
+import Router from './Router/router';
 
 function App() {
   return (
     <div className="App">
-      <Page />
+       <BrowserRouter>
+          <Router />
+       </BrowserRouter>
     </div>
   );
 }

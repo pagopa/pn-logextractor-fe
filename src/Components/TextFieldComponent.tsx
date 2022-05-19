@@ -1,25 +1,18 @@
 import { TextField } from "@mui/material";
+import { FieldsProps } from "./FormFields";
 
 /**
  * @typedef {Object} Props
  */
 type Props = {
   /**
-   * label used for the textfield
+   * field properties 
    */
-  label: string,
-  /**
-   * if this textfield is required
-   */
-  required: boolean,
+  field: FieldsProps,
   /**
    * function for handling changes in this textfield
    */
   onChange?: any,
-  /**
-   * default value if there is any
-   */
-  value?: any,
 }
 
 /**
@@ -27,16 +20,18 @@ type Props = {
  * @component
  * @param {Props} props
  */
-const TextFieldComponent = (fieldData: Props) => {
+const TextFieldComponent = (props: Props) => {
+  const field = props.field
     return(
          <TextField 
-            key={fieldData.label} 
-            id={fieldData.label} 
-            label={fieldData.label}
+            fullWidth
+            type={field.type}
+            hidden={field.hidden!}
+            id={field.label} 
+            label={field.label}
             variant="outlined"
-            value={fieldData.value}
-            onChange={fieldData.onChange}
-            required={fieldData.required} />
+            onChange={props.onChange}
+            required={field.required} />
     )
 }
 export default TextFieldComponent;

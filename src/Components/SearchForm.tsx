@@ -1,7 +1,7 @@
-import { Button, Container, Grid, MenuItem, Select, SelectChangeEvent, Tooltip } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import{ useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import { MenuItems, FormField, FieldsProperties, FieldsProps } from "./FormFields";
+import { FieldsProperties, FieldsProps, FormField, MenuItems } from "./FormFields";
 
 /**
  * default values of the form fields
@@ -22,16 +22,18 @@ const defaultFormValues: {[key: string]: string} = {
  * Generating the app form using the form fields
  * @component
  */
-const FormApp = () => {
+const SearchForm = () => {
 
     /**
      * selected value of Tipo Estrazione select menu
      */
     const [selectedValue, setSelectedValue] = useState<string>(Object.keys(MenuItems)[0]);
+    
     /**
      * the fields coresponding to the selected value
      */
-    const [fields, setFields]  = useState<FieldsProps[]>(MenuItems[selectedValue].map(field => FieldsProperties[field]));
+    const [fields, setFields]  = useState<FieldsProps[]>(Object.values(FieldsProperties));
+    
     /**
      * form functionalities from react-hook-forms
      */
@@ -44,6 +46,9 @@ const FormApp = () => {
     */
     const watchAllFields = useWatch({name: MenuItems[selectedValue], control});
     
+    /**
+    * used for watching Tipo Estrazione select menu 
+    */
     const watchTipoEstrazione = useWatch({name: "Tipo Estrazione", control})
 
 
@@ -55,22 +60,21 @@ const FormApp = () => {
         const values = getValues();
         reset({...defaultFormValues, "Tipo Estrazione": values["Tipo Estrazione"]});
         setSelectedValue(values["Tipo Estrazione"]);
-        setFields(MenuItems[values["Tipo Estrazione"]].map(field => FieldsProperties[field]));
-        
+        setFields(filterFields(MenuItems[values["Tipo Estrazione"]]));
     }, [watchTipoEstrazione])
 
-
+ 
     /**
      * function handling the changes in the fields when the selected value of Tipo Estrazione is
      * "Ottieni log completi" so some fields are hidden and some are shown according
-     *  to which fields are filled 
+     * to which fields are filled 
      */
     useEffect(() => {
         let dirtyFields = formState.dirtyFields;
         let neededFields: string[] = []
         if(selectedValue === "Ottieni log completi"){
-            if(Object.keys(dirtyFields).length == 0 || 
-                (Object.keys(dirtyFields).length == 1 && Object.keys(dirtyFields).includes("Ticket Number"))){
+            if(Object.keys(dirtyFields).length == 0 || (Object.keys(dirtyFields).length == 1 && 
+                ["Activity Path Radio Buttons", "Ticket Number"].includes( Object.keys(dirtyFields)[0]))){
                 neededFields = MenuItems["Ottieni log completi"].filter(item => item != "Activity Path Radio Buttons");
             }else{
                 if(Object.keys(dirtyFields).includes("Time interval")){
@@ -80,65 +84,54 @@ const FormApp = () => {
                     neededFields = ["Ticket Number", "Codice Fiscale", "Time interval"];
                 }
                 if(Object.keys(dirtyFields).includes("Unique Identifier")){
-                    neededFields = ["Unique Identifier", "Time interval"];
+                    neededFields = ["Ticket Number", "Unique Identifier", "Time interval"];
                 }
                 if(Object.keys(dirtyFields).includes("IUN")){
                     neededFields = ["Ticket Number", "IUN", "Activity Path Radio Buttons"];
                 }           
             }
-            setFields(filterFields(fields, neededFields));
+            setFields(filterFields(neededFields));
         }
     }, [watchAllFields])
 
 
     /**
      * 
-     * @param {FieldsProps[]} allFields all fields for "Ottieni log completi" from MenuItems
      * @param {string[]} neededFields needed fields in the situation just as names 
      * @returns {FieldsProps[]} needed fields with their specific properties ready for creating 
      */
-    const filterFields = (allFields:FieldsProps[], neededFields:string[]): FieldsProps[] => {
-        let filterFields = allFields.map(field => (!neededFields.includes(field.name) 
-                    ? { ...field, hidden: true } : {...field, hidden: false}));
-        return filterFields;
+    const filterFields = (neededFields:string[]): FieldsProps[] => {
+        const allFields = Object.values(FieldsProperties);
+        return allFields.map(field => (neededFields.includes(field.name) || field.name == "Tipo Estrazione" ?
+                    field : { ...field, hidden: true }));
     }
 
     return(
         <Container>
-            <Grid container direction="column" rowSpacing={4}>
+            <Grid container direction="column" rowSpacing={4} sx={{border: "2px black dotted", padding: "5%"}}>
                 <form onSubmit={handleSubmit(data => console.log(data))}>
                         <Grid container item direction="column" rowSpacing={5}>
                             <Grid item container direction="row" spacing={2} alignItems="center">
-                                <Grid item>
-                                    <Controller
-                                         control={control}
-                                         name={"Tipo Estrazione"}
-                                         render={({
-                                             field: { onChange, onBlur, value, name, ref },
-                                             fieldState: { invalid, isTouched, isDirty, error },
-                                             formState,
-                                         }) => (
-                                             <FormField key="Tipo Estrazione" value={selectedValue} onChange={onChange} field={FieldsProperties["Tipo Estrazione"]}/>
-                                         )}
-                                         />
-                                </Grid>  
                                 {
-                                    fields.map(item => {
+                                    fields.map(field => {
                                         return (
-                                            !item.hidden &&
-                                            
-                                            <Controller
-                                                key={item.name}
+                                            !field.hidden &&
+                                            <Grid item key={field.name + "Item"}>
+                                                <Controller
                                                 control={control}
-                                                name={item.name}
+                                                name={field.name}
                                                 render={({
                                                     field: { onChange, onBlur, value, name, ref },
                                                     fieldState: { invalid, isTouched, isDirty, error },
                                                     formState,
-                                                }) => (
-                                                    <FormField key={item.name} value={value} onChange={onChange} field={item}/>
-                                                )}
+                                                }) => {
+                                                    return(
+                                                        <FormField field={field} onChange={onChange} value={value}/>
+                                                    ) 
+                                                }}
                                                 />
+                                            </Grid>
+                                            
                                         )
                                     })
                                 }
@@ -157,4 +150,4 @@ const FormApp = () => {
     )
 }
 
-export default FormApp;
+export default SearchForm;

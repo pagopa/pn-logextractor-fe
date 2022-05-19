@@ -19,14 +19,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     {/* <Provider store={store}> */}
-      <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Suspense fallback="loading...">
             <App />
           </Suspense>
         </ThemeProvider>
-      </BrowserRouter>
     {/* </Provider>   */}
   </React.StrictMode>
 );

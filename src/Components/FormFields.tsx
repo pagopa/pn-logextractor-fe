@@ -1,8 +1,7 @@
-import { Fragment } from "react";
 import TextFieldComponent from "./TextFieldComponent"
 import RadioButtonsGroup from "./RadioButtonsGroup";
-import Select from "@mui/material/Select";
-import { FormControl, Grid, InputLabel, MenuItem } from "@mui/material";
+import { Grid} from "@mui/material";
+import SelectField from "./SelectField";
 
 
 /**
@@ -48,7 +47,11 @@ type FieldsProps = {
     /**
      * options in case the component is redionButtons
      */
-    options?: string[]
+    options?: string[],
+    /**
+     * the type of the text field
+     */
+    type?: string
 }
 
 /**
@@ -129,7 +132,23 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         required: true,
         hidden: false,
         options: ["Anonymized activity path", "Non-anonymized activity path"]
-    }
+    },
+    "Email": {
+        name: "email",
+        componentType: "textfield",
+        label: "Email",
+        required: true,
+        hidden: false,
+        type: "email"
+    },
+    "Password": {
+        name: "password",
+        componentType: "textfield",
+        label: "Password",
+        required: true,
+        hidden: false,
+        type: "password" 
+    },
 }
 
 /**
@@ -147,37 +166,19 @@ type Props = {
  * @param {Props} props
  */
 const FormField = ({ field, onChange, value }: Props) => { 
-    const {componentType, label, required, selectItems}: FieldsProps = field;
+    const componentType : string = field.componentType;
     return <Grid item>
         {
             componentType == "textfield" && 
-                <TextFieldComponent value={value} onChange={onChange} key={label} label={label} required={required}/>
+                <TextFieldComponent onChange={onChange} field={field} />
         }
         {
             componentType == "select" &&
-            <Fragment>
-                <FormControl sx={{ minWidth: 180 }} >
-                    <InputLabel id={label}>{label}</InputLabel>
-                    <Select
-                        key={label}
-                        labelId={label}
-                        id={label}
-                        label={label}
-                        onChange={onChange}
-                        value={value}
-                    >
-                        {
-                            label != "Tipo Estrazione" &&
-                            <MenuItem key="none" value=""></MenuItem>
-                        }
-                        {selectItems?.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
-                    </Select>
-                </FormControl>
-            </Fragment>
+                <SelectField value={value} field={field} onChange={onChange} />
         }
         {
             componentType == "radioButtons" &&
-            <RadioButtonsGroup field={field} onChange={onChange}></RadioButtonsGroup>
+                <RadioButtonsGroup field={field} onChange={onChange}></RadioButtonsGroup>
         }
     </Grid>
  }

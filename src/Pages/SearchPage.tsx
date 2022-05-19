@@ -1,14 +1,14 @@
-import Header from './Header';
-import SnackbarComponent from './SnackbarComponent';
-import ResponseData from './ResponseData';
-import Form from './Form';
+import Header from '../Components/Header';
+import SnackbarComponent from '../Components/SnackbarComponent';
+import ResponseData from '../Components/ResponseData';
+import SearchForm from '../Components/SearchForm';
 import { Grid } from '@mui/material';
 
 /**
  * Component containing all objects of the app representing the whole page 
  * @component
  */
-const Page = () => {
+const SearchPage = () => {
   return (
         <Grid container direction="column" justifyItems="start" justifyContent="space-around" rowSpacing={5} wrap="nowrap">
             <Grid item>
@@ -18,7 +18,7 @@ const Page = () => {
                 <SnackbarComponent severity="errorData"/>
             </Grid>
             <Grid item>
-                <Form />
+                <SearchForm />
             </Grid>
             <Grid item>
                 <ResponseData type={"password"} value={"ac5r2ss0"}/>
@@ -27,4 +27,4 @@ const Page = () => {
   );
 }
 
-export default Page;
+export default SearchPage;
