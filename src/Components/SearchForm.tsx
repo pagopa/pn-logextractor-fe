@@ -6,7 +6,7 @@ import { FieldsProperties, FieldsProps, FormField, MenuItems } from "./FormField
 /**
  * default values of the form fields
  */
-const defaultFormValues: {[key: string]: string} = {
+const defaultFormValues: {[key: string]: string | boolean } = {
     "Ticket Number": "",
     "Codice Fiscale": "",
     "Unique Identifier": "",
@@ -15,7 +15,8 @@ const defaultFormValues: {[key: string]: string} = {
     "Month": "",
     "Time interval": "",
     "Tipo Estrazione": "Ottieni EncCF",
-    "Person Radio Buttons": ""
+    "Person Radio Buttons": "",
+    "Deanonymization Checkbox": false
 }
 
 /**
@@ -58,9 +59,9 @@ const SearchForm = () => {
      */
     useEffect(() => {
         const values = getValues();
+        setSelectedValue(values["Tipo Estrazione"].toString());
+        setFields(filterFields(MenuItems[values["Tipo Estrazione"].toString()]));
         reset({...defaultFormValues, "Tipo Estrazione": values["Tipo Estrazione"]});
-        setSelectedValue(values["Tipo Estrazione"]);
-        setFields(filterFields(MenuItems[values["Tipo Estrazione"]]));
     }, [watchTipoEstrazione])
 
  
@@ -74,8 +75,8 @@ const SearchForm = () => {
         let neededFields: string[] = []
         if(selectedValue === "Ottieni log completi"){
             if(Object.keys(dirtyFields).length == 0 || (Object.keys(dirtyFields).length == 1 && 
-                ["Activity Path Radio Buttons", "Ticket Number"].includes( Object.keys(dirtyFields)[0]))){
-                neededFields = MenuItems["Ottieni log completi"].filter(item => item != "Activity Path Radio Buttons");
+                ["Deanonymization Checkbox", "Ticket Number"].includes( Object.keys(dirtyFields)[0]))){
+                neededFields = MenuItems["Ottieni log completi"].filter(item => item != "Deanonymization Checkbox");
             }else{
                 if(Object.keys(dirtyFields).includes("Time interval")){
                     neededFields = ["Ticket Number", "Codice Fiscale", "Time interval", "Unique Identifier"];
@@ -87,7 +88,7 @@ const SearchForm = () => {
                     neededFields = ["Ticket Number", "Unique Identifier", "Time interval"];
                 }
                 if(Object.keys(dirtyFields).includes("IUN")){
-                    neededFields = ["Ticket Number", "IUN", "Activity Path Radio Buttons"];
+                    neededFields = ["Ticket Number", "IUN", "Deanonymization Checkbox"];
                 }           
             }
             setFields(filterFields(neededFields));

@@ -13,6 +13,10 @@ type Props = {
    * function for handling changes in this textfield
    */
   onChange?: any,
+  /**
+   * value of the field
+   */
+  value?: any 
 }
 
 /**
@@ -27,6 +31,7 @@ const TextFieldComponent = (props: Props) => {
             fullWidth
             type={field.type}
             hidden={field.hidden!}
+            value={props.value}
             id={field.label} 
             label={field.label}
             variant="outlined"

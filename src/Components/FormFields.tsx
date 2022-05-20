@@ -1,6 +1,6 @@
 import TextFieldComponent from "./TextFieldComponent"
 import RadioButtonsGroup from "./RadioButtonsGroup";
-import { Grid} from "@mui/material";
+import { Checkbox, FormControlLabel, Grid} from "@mui/material";
 import SelectField from "./SelectField";
 
 
@@ -13,7 +13,7 @@ let MenuItems: {[key: string]: Array<string>} = {
     "Ottieni notifica": ["Ticket Number","IUN"],
     "Ottieni notifiche di una PA": ["Ticket Number", "IPA Code", "Month"],
     "Ottieni log completi + organizzazione": ["Ticket Number", "Codice Fiscale", "Time interval"],
-    "Ottieni log completi": ["Ticket Number", "Codice Fiscale", "IUN", "Unique Identifier", "Time interval", "Activity Path Radio Buttons"] ,
+    "Ottieni log completi": ["Ticket Number", "Codice Fiscale", "IUN", "Unique Identifier", "Time interval", "Deanonymization Checkbox"] ,
 }
 
 /**
@@ -125,13 +125,12 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         options: ["Natural person", "Legal person"]
     },
-    "Activity Path Radio Buttons": {
-        name: "Activity Path Radio Buttons",
-        componentType: "radioButtons",
-        label: "Activity Path",
+    "Deanonymization Checkbox": {
+        name: "Deanonymization Checkbox",
+        componentType: "checkbox",
+        label: "Deanonimizzazione dati",
         required: true,
         hidden: false,
-        options: ["Anonymized activity path", "Non-anonymized activity path"]
     },
     "Email": {
         name: "email",
@@ -170,7 +169,7 @@ const FormField = ({ field, onChange, value }: Props) => {
     return <Grid item>
         {
             componentType == "textfield" && 
-                <TextFieldComponent onChange={onChange} field={field} />
+                <TextFieldComponent value={value} onChange={onChange} field={field} />
         }
         {
             componentType == "select" &&
@@ -179,6 +178,10 @@ const FormField = ({ field, onChange, value }: Props) => {
         {
             componentType == "radioButtons" &&
                 <RadioButtonsGroup field={field} onChange={onChange}></RadioButtonsGroup>
+        }
+        {
+            componentType == "checkbox" &&
+                <FormControlLabel label={field.label} control={<Checkbox value={value} onChange={onChange}/>} />
         }
     </Grid>
  }
