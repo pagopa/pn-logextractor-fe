@@ -16,7 +16,7 @@ type Props = {
   /**
    * value of the field
    */
-  value?: any 
+  value?: any
 }
 
 /**
@@ -36,7 +36,7 @@ const TextFieldComponent = (props: Props) => {
             label={field.label}
             variant="outlined"
             onChange={props.onChange}
-            required={field.required} />
+            />
     )
 }
 export default TextFieldComponent;

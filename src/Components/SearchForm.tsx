@@ -1,4 +1,4 @@
-import { Button, Container, Grid } from "@mui/material";
+import { Button, Container, FormHelperText, Grid } from "@mui/material";
 import{ useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { FieldsProperties, FieldsProps, FormField, MenuItems } from "./FormFields";
@@ -6,7 +6,7 @@ import { FieldsProperties, FieldsProps, FormField, MenuItems } from "./FormField
 /**
  * default values of the form fields
  */
-const defaultFormValues: {[key: string]: string | boolean } = {
+const defaultFormValues: {[key: string]: any } = {
     "Ticket Number": "",
     "Codice Fiscale": "",
     "Unique Identifier": "",
@@ -15,7 +15,7 @@ const defaultFormValues: {[key: string]: string | boolean } = {
     "Month": "",
     "Time interval": "",
     "Tipo Estrazione": "Ottieni EncCF",
-    "Person Radio Buttons": "",
+    "Person Radio Buttons": "PF",
     "Deanonymization Checkbox": false
 }
 
@@ -38,7 +38,8 @@ const SearchForm = () => {
     /**
      * form functionalities from react-hook-forms
      */
-    const { handleSubmit, control, watch, formState, reset, getValues,  } = useForm({
+    const { handleSubmit, control, watch, formState: { dirtyFields, errors }, reset, getValues,  } = useForm({
+        mode: 'onChange',
         defaultValues: defaultFormValues
     });
 
@@ -71,7 +72,6 @@ const SearchForm = () => {
      * to which fields are filled 
      */
     useEffect(() => {
-        let dirtyFields = formState.dirtyFields;
         let neededFields: string[] = []
         if(selectedValue === "Ottieni log completi"){
             if(Object.keys(dirtyFields).length == 0 || (Object.keys(dirtyFields).length == 1 && 
@@ -121,16 +121,23 @@ const SearchForm = () => {
                                                 <Controller
                                                 control={control}
                                                 name={field.name}
+                                                rules={field.rules}
                                                 render={({
                                                     field: { onChange, onBlur, value, name, ref },
                                                     fieldState: { invalid, isTouched, isDirty, error },
                                                     formState,
                                                 }) => {
                                                     return(
-                                                        <FormField field={field} onChange={onChange} value={value}/>
+                                                        <>
+                                                            <FormField field={field} onChange={onChange} value={value}/> 
+                                                            <FormHelperText error>{errors[field.name] ? 
+                                                                errors[field.name].message ? errors[field.name].message : "Incorrect value!"
+                                                                :  " "}</FormHelperText>
+                                                        </>
+                                                                                 
                                                     ) 
                                                 }}
-                                                />
+                                                />  
                                             </Grid>
                                             
                                         )
@@ -140,7 +147,7 @@ const SearchForm = () => {
                     
                         <Grid item container direction="row" justifyContent="flex-start">
                             <Grid item>
-                                <Button sx={{top: "-2px"}} size="large" type="submit" variant="outlined">Ricerca</Button>                       
+                                <Button disabled={Object.keys(errors).length > 0} sx={{top: "-2px"}} size="large" type="submit" variant="outlined">Ricerca</Button>                       
                             </Grid>
                         </Grid>
                     </Grid>

@@ -2,6 +2,7 @@ import TextFieldComponent from "./TextFieldComponent"
 import RadioButtonsGroup from "./RadioButtonsGroup";
 import { Checkbox, FormControlLabel, Grid} from "@mui/material";
 import SelectField from "./SelectField";
+import { regex } from "./validations";
 
 
 /**
@@ -29,10 +30,6 @@ type FieldsProps = {
      */
     label: string,
     /**
-     *if the field is required
-     */
-    required: boolean,
-    /**
      * items in case the component is select menu 
      */
     selectItems?: Array<string> ,
@@ -47,11 +44,16 @@ type FieldsProps = {
     /**
      * options in case the component is redionButtons
      */
-    options?: string[],
+    options?: Array<{[key: string]: string}>,
     /**
      * the type of the text field
      */
     type?: string
+
+    /**
+     * validation rules
+     */
+    rules?: any
 }
 
 /**
@@ -62,7 +64,6 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         name: "Tipo Estrazione",
         componentType: "select",
         label: "Tipo Estrazione",
-        required: true,
         hidden: false,
         selectItems: Object.keys(MenuItems)
     },
@@ -70,83 +71,124 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             name: "Ticket Number",
             componentType: "textfield",
             label: "Numero Ticket",
-            required: true,
-            hidden: false
+            hidden: false,
+            rules: {
+                pattern: regex.ALPHA_NUMERIC_WITHOUT_SPECIAL_CHAR_PATTERN,
+                required: "This field is required."
+            }
     },
     "Codice Fiscale": {
             name: "Codice Fiscale",
             componentType: "textfield",
             label: "Codice Fiscale",
-            required: true,
-            hidden: false
+            hidden: false,
+            rules: {
+                pattern: regex.FISCAL_CODE_PATTERN,
+                minLength: 16,
+                maxLength: 16,
+                required: "This field is required."
+            }
     },
     "Unique Identifier": {
             name: "Unique Identifier",
             componentType: "textfield",
             label: "Codice Univoco",
-            required: true,
-            hidden: false
+            hidden: false,
+            rules: {
+                pattern: regex.UNIQUE_IDENTIFIER_PATTERN,
+                minLength: 1,
+                maxLength: 100,
+                required: "This field is required."
+            }
     },
     "IUN": {
             name: "IUN",
             componentType: "textfield",
             label: "IUN",
-            required: true,
-            hidden: false
+            hidden: false,
+            rules: {
+                required: "This field is required."
+            }
     },
     "IPA Code": {
             name: "IPA Code",
             componentType: "textfield",
             label: "IPA Code",
-            required: true,
-            hidden: false
+            hidden: false,
+            rules: {
+                required: "This field is required."
+            }
     },
     "Month": {
             name: "Month",
             componentType: "select",
             label: "Mese",
-            required: true,
             selectItems: Array.from({length: 12}, (_, i) => (i + 1).toString()),
-            hidden: false
+            hidden: false,
+            rules: {
+                min: 1,
+                max: 12,
+                required: "This field is required."
+            }
     },
     "Time interval": {
             name: "Time interval",
             componentType: "select",
             label: "Intervallo temporale (mesi)",
-            required: true,
             selectItems: Array.from({length: 3}, (_, i) => (i + 1).toString()),
-            hidden: false
+            hidden: false,
+            rules: {
+                min: 1,
+                max: 3,
+                required: "This field is required."
+            }
     },
     "Person Radio Buttons": {
         name: "Person Radio Buttons",
         componentType: "radioButtons",
         label: "Tipo personale",
-        required: true,
         hidden: false,
-        options: ["Natural person", "Legal person"]
+        rules: {
+            required: "This field is required."
+        },
+        options: [
+            {
+                option: "Natural person",
+                value: "PF"
+            }, 
+            {
+                option: "Legal person",
+                value: "PG"
+            }]
     },
     "Deanonymization Checkbox": {
         name: "Deanonymization Checkbox",
         componentType: "checkbox",
         label: "Deanonimizzazione dati",
-        required: true,
         hidden: false,
+        rules: {
+            required: "This field is required."
+        },
     },
     "Email": {
         name: "email",
         componentType: "textfield",
         label: "Email",
-        required: true,
         hidden: false,
-        type: "email"
+        type: "email",
+        rules: {
+            required: "This field is required."
+        },
     },
     "Password": {
         name: "password",
         componentType: "textfield",
         label: "Password",
-        required: true,
         hidden: false,
-        type: "password" 
+        type: "password",
+        rules: {
+            required: "This field is required."
+        },
     },
 }
 
@@ -177,7 +219,7 @@ const FormField = ({ field, onChange, value }: Props) => {
         }
         {
             componentType == "radioButtons" &&
-                <RadioButtonsGroup field={field} onChange={onChange}></RadioButtonsGroup>
+                <RadioButtonsGroup value={value} field={field} onChange={onChange}></RadioButtonsGroup>
         }
         {
             componentType == "checkbox" &&

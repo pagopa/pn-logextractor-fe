@@ -13,6 +13,10 @@ type Props = {
      * function handling the change of the field 
      */
     onChange: any,
+    /**
+     * value of the field if there is any
+     */
+    value: any
 }
 
 /**
@@ -27,12 +31,12 @@ const RadioButtonsGroup = (props: Props) => {
         <FormControl >
             <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue={options![0]}
+                value={props.value}
                 name={name}
             >
                 {
                     options!.map(option => (
-                        <FormControlLabel key={option} onChange={props.onChange}  value={option} control={<Radio />} label={option} />
+                        <FormControlLabel key={option.option} onChange={props.onChange}  value={option.value} control={<Radio />} label={option.option} />
                     ))
                 }
             </RadioGroup>
