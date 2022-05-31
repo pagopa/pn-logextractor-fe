@@ -2,7 +2,9 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Tooltip } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * General component presenting the header of the app.
@@ -10,10 +12,31 @@ import { Tooltip } from '@mui/material';
 const Header = () => {
   
   /**
-  * Function handling the log out button click
+  * the state of the confirmation modal
+  */
+  const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  /**
+  * Function closing the confirmation modal
+  */
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  /**
+  * Function opening the confirmation modal after the log out button is click
+  */
+  const handleOpenModal = () => {
+    setOpen(true);
+  }
+
+  /**
+  * Function handling the logging out
   */
   const handleLogOut = () => {
-    console.log("log out");
+    navigate("/");
   }
 
   return(
@@ -26,12 +49,33 @@ const Header = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={handleLogOut}
+            onClick={handleOpenModal}
             >
               <LogoutIcon />
             </IconButton>
           </Tooltip>
          </Toolbar>
+          <Dialog
+            open={open}
+            onClose={handleCloseModal}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle id="alert-dialog-title">
+            LOG OUT
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to log out?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal}>No</Button>
+            <Button onClick={handleLogOut} autoFocus>
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       </AppBar>
   )
 }

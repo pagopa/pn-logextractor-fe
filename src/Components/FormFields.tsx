@@ -3,18 +3,22 @@ import RadioButtonsGroup from "./RadioButtonsGroup";
 import { Checkbox, FormControlLabel, Grid} from "@mui/material";
 import SelectField from "./SelectField";
 import { regex } from "./validations";
+import DatePickerComponent from "./DatePickerComponent";
+import DateRangePickerComponent from "./DataRangePickerComponent";
+import moment from "moment";
+import { CalendarPickerView } from "@mui/lab";
 
 
 /**
  * Items for the Tipo Estrazione and their coresponding fields
  */
 let MenuItems: {[key: string]: Array<string>} = {
-    "Ottieni EncCF": ["Ticket Number", "Codice Fiscale", "Person Radio Buttons"],
-    "Ottieni CF": ["Unique Identifier", "Person Radio Buttons"],
-    "Ottieni notifica": ["Ticket Number","IUN"],
+    "Ottieni EncCF": ["Ticket Number", "Codice Fiscale", "Date Picker", "Person Radio Buttons"],
+    "Ottieni CF": ["Unique Identifier", "Date Picker", "Person Radio Buttons"],
+    "Ottieni notifica": ["Ticket Number","IUN", "Date Picker"],
     "Ottieni notifiche di una PA": ["Ticket Number", "IPA Code", "Month"],
     "Ottieni log completi + organizzazione": ["Ticket Number", "Codice Fiscale", "Time interval"],
-    "Ottieni log completi": ["Ticket Number", "Codice Fiscale", "IUN", "Unique Identifier", "Time interval", "Deanonymization Checkbox"] ,
+    "Ottieni log completi": ["Ticket Number", "Codice Fiscale", "IUN", "Unique Identifier", "Time interval", "Deanonymization Checkbox"]
 }
 
 /**
@@ -53,7 +57,15 @@ type FieldsProps = {
     /**
      * validation rules
      */
-    rules?: any
+    rules?: any,
+    /**
+     * if the component is a calendar, it is its type
+     */
+    view?: CalendarPickerView[],
+    /**
+     * the format of the date, if the component is a calendar
+     */
+    format?: string
 }
 
 /**
@@ -121,27 +133,52 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
     },
     "Month": {
             name: "Month",
-            componentType: "select",
+            componentType: "datePicker",
             label: "Mese",
-            selectItems: Array.from({length: 12}, (_, i) => (i + 1).toString()),
             hidden: false,
             rules: {
-                min: 1,
-                max: 12,
-                required: "This field is required."
-            }
+                required: "This field is required.",
+                valueAsDate: true,
+            },
+            view: ["month", "year"],
+            type: "month",
+            format: "yyyy-MM"
     },
     "Time interval": {
             name: "Time interval",
-            componentType: "select",
-            label: "Intervallo temporale (mesi)",
-            selectItems: Array.from({length: 3}, (_, i) => (i + 1).toString()),
+            componentType: "dateRangePicker",
+            label: "Time interval",
             hidden: false,
             rules: {
-                min: 1,
-                max: 3,
-                required: "This field is required."
+                required: "This field is required.",
+                validate: {
+                    validateInterval: (dates: Array<any>) => {
+                        let startDate = moment(dates[0].value);
+                        let endDate = moment(dates[1].value);
+                        let interval = endDate.diff(startDate, "days");
+                        return interval <= 90 || "Time interval can't be more than 3 months."
+                    },
+                    checkDates: (dates: Array<any>) => {
+                        let startDate = moment(dates[0].value);
+                        let endDate = moment(dates[1].value);
+                        return startDate.isBefore(endDate) || 
+                            "Start date can't be after the end date"
+                    }
+                }
             }
+    },
+    "Date Picker": {
+        name: "Date Picker",
+        componentType: "datePicker",
+        label: "Date",
+        hidden: false,
+        type: "date",
+        rules: {
+            required: "This field is required.",
+            valueAsDate: true,
+        },
+        view: ["day"],
+        format: "yyyy-MM-dd"
     },
     "Person Radio Buttons": {
         name: "Person Radio Buttons",
@@ -153,11 +190,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         },
         options: [
             {
-                option: "Natural person",
+                option: "Persona Fisica",
                 value: "PF"
             }, 
             {
-                option: "Legal person",
+                option: "Persona Giuridica",
                 value: "PG"
             }]
     },
@@ -224,6 +261,25 @@ const FormField = ({ field, onChange, value }: Props) => {
         {
             componentType == "checkbox" &&
                 <FormControlLabel label={field.label} control={<Checkbox value={value} onChange={onChange}/>} />
+        }
+        {
+            componentType == "datePicker" &&
+                <DatePickerComponent format={field.format!} onChange={onChange} label={field.label} view={field.view!} value={value}/>
+        }
+        {
+            componentType == "dateRangePicker" &&
+                <DateRangePickerComponent onChange={onChange} intervalLimit={[3, "months"]}  datePickers={[
+                    {
+                        label: "Dal",
+                        view:["day"],
+                        value:value[0]
+                    },
+                    {
+                        label: "Al",
+                        view:["day"],
+                        value:value[1]
+                    }
+                ]} />
         }
     </Grid>
  }

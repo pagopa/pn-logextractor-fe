@@ -2,6 +2,7 @@ import { Button, Container, FormHelperText, Grid } from "@mui/material";
 import{ useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { FieldsProperties, FieldsProps, FormField, MenuItems } from "./FormFields";
+import moment from 'moment';
 
 /**
  * default values of the form fields
@@ -12,11 +13,12 @@ const defaultFormValues: {[key: string]: any } = {
     "Unique Identifier": "",
     "IUN": "",
     "IPA Code": "",
-    "Month": "",
-    "Time interval": "",
+    "Month": moment().format("YYYY-MM"),
     "Tipo Estrazione": "Ottieni EncCF",
     "Person Radio Buttons": "PF",
-    "Deanonymization Checkbox": false
+    "Deanonymization Checkbox": false,
+    "Date Picker": moment().format("YYYY-MM-DD"),
+    "Time interval": [moment().subtract(3, 'months').format("YYYY-MM-DD"), moment(new Date).format("YYYY-MM-DD")]
 }
 
 /**
@@ -38,7 +40,7 @@ const SearchForm = () => {
     /**
      * form functionalities from react-hook-forms
      */
-    const { handleSubmit, control, watch, formState: { dirtyFields, errors }, reset, getValues,  } = useForm({
+    const { handleSubmit, control, watch, formState: { dirtyFields, errors }, reset, getValues} = useForm({
         mode: 'onChange',
         defaultValues: defaultFormValues
     });
