@@ -1,18 +1,9 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import Alert from '@mui/material/Alert';
-import type { Color } from '@material-ui/lab/Alert'
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
-
-/**
- * @typedef {Object} Props
- */
-type Props = {
-  /**
-  * The type of the alert
-  */
-  severity: string 
-}
-
+import { updateSnackbacrOpened, opened, statusCode } from "../redux/snackbarSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 /** 
  * connecting severity with the type of alert
  * @enum 
@@ -20,9 +11,9 @@ type Props = {
  * @type {string} 
  */
 enum Severity {
-  success = "success",
-  errorData = "error",
-  error = "error"
+  "OK" = "success",
+  "Bad Request" = "error",
+  "Internal Server Error" = "error",
 }
 
 /** 
@@ -32,9 +23,9 @@ enum Severity {
  * @type {string} 
  */
 enum SeverityMessage {
-  success = "Operazione completata con successo",
-  errorData = "Informazioni non valide",
-  error = "Errore durante l'elaborazione della richiesta",
+  "OK" = "Operazione completata con successo",
+  "Bad Request" = "Informazioni non valide",
+  "Internal Server Error" = "Errore durante l'elaborazione della richiesta",
 }
 
 /** 
@@ -52,8 +43,15 @@ const styles = {
  * @component
  * @param {Props} props
  */
-const SnackbarComponent = ({severity}: Props) => {
-    const [snackbarOpen, setSnackbarOpen] = useState(true);
+const SnackbarComponent = () => {
+
+    const [severity, setSeverity] = useState("")
+
+    const snackbarOpened: boolean  = useSelector(opened);
+
+    const status: any = useSelector(statusCode);
+
+    const dispatch = useDispatch();
 
     /**
     * function handling the closing of the snackbar 
@@ -62,12 +60,26 @@ const SnackbarComponent = ({severity}: Props) => {
     */
     const handleClose = (event?: Event | SyntheticEvent<any, Event>, reason: SnackbarCloseReason = "escapeKeyDown") => {
       if(reason != "clickaway"){
-        setSnackbarOpen(false);
+        dispatch(updateSnackbacrOpened(false))
       }
-  }
+    }
+
+    const getSeverity = () => {
+      if(status){
+        if(status >= 200 && status < 300){
+        setSeverity("OK")
+      }else if(status >= 400 && status < 500){
+        setSeverity("Bad Request")
+      }else{
+        setSeverity("Internal Server Error");
+      }
+      }  
+    }
+
+    useEffect(() => getSeverity())
 
     return(
-        <Snackbar open={snackbarOpen}
+        <Snackbar open={snackbarOpened}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 sx={styles}
                 onClose={(e: Event | SyntheticEvent<any, Event>, r: SnackbarCloseReason) => handleClose(e, r)}

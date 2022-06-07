@@ -64,15 +64,15 @@ const DateRangePickerComponent = (props: Props) => {
         let prevState = [...dates];
         switch (field) {
             case "start":
-                prevState[0] = {...prevState[0], value};
+                prevState[0] = {...prevState[0], value: value};
                 setDates(prevState)
                 break;
             case "end":
-                prevState[1] = {...prevState[1], value};
+                prevState[1] = {...prevState[1], value: value};
                 setDates(prevState)
                 break;
         }
-        props.onChange(prevState);
+        props.onChange([prevState[0].value, prevState[1].value]);
     }
 
     return(

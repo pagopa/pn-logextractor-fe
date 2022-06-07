@@ -1,4 +1,7 @@
-import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
+import { opened, responseData } from "../redux/responseSlice";
+import { useSelector } from 'react-redux';
+
 /** 
  * connecting the response type with specific message
  * @enum 
@@ -7,21 +10,8 @@ import Box from '@mui/material/Box';
  */
 enum ResponseType {
     password = "Password",
-    codice = "Codice Univoco"
-}
-
-/**
- * @typedef {Object} Props
- */
-type Props = {
-  /**
-   * the type of the response string or password
-   */
-  type: string,
-  /**
-   * the value of the response
-   */
-  value: string
+    taxId = "Codice Fiscale",
+    internalId = "ID"
 }
 
 /**
@@ -29,12 +19,21 @@ type Props = {
  * @component
  * @param {Props} props
  */
-const ResponseData = ({type, value}: Props) => {
+const ResponseData = () => {
+
+  const openedResponseData = useSelector(opened);
+
+  const response = useSelector(responseData);
+
   return (
-    <Box component="div" sx={{display: "flex", justifyContent: "center"}}>
-          <p>{ResponseType[type as keyof typeof ResponseType]}: {value}</p>
-    </Box>
-    );
+    openedResponseData ?
+      <Typography align="center">
+        <>
+          {ResponseType[Object.keys(response)[0] as keyof typeof ResponseType]} : {Object.values(response)[0]}
+        </>
+      </Typography>
+      : null
+    )
 }
 
 export default ResponseData;

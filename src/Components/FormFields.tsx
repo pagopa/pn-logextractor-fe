@@ -2,7 +2,7 @@ import TextFieldComponent from "./TextFieldComponent"
 import RadioButtonsGroup from "./RadioButtonsGroup";
 import { Checkbox, FormControlLabel, Grid} from "@mui/material";
 import SelectField from "./SelectField";
-import { regex } from "./validations";
+import { regex } from "../helpers/validations";
 import DatePickerComponent from "./DatePickerComponent";
 import DateRangePickerComponent from "./DataRangePickerComponent";
 import moment from "moment";
@@ -13,12 +13,14 @@ import { CalendarPickerView } from "@mui/lab";
  * Items for the Tipo Estrazione and their coresponding fields
  */
 let MenuItems: {[key: string]: Array<string>} = {
-    "Ottieni EncCF": ["Ticket Number", "Codice Fiscale", "Date Picker", "Person Radio Buttons"],
-    "Ottieni CF": ["Unique Identifier", "Date Picker", "Person Radio Buttons"],
-    "Ottieni notifica": ["Ticket Number","IUN", "Date Picker"],
-    "Ottieni notifiche di una PA": ["Ticket Number", "IPA Code", "Month"],
-    "Ottieni log completi + organizzazione": ["Ticket Number", "Codice Fiscale", "Time interval"],
-    "Ottieni log completi": ["Ticket Number", "Codice Fiscale", "IUN", "Unique Identifier", "Time interval", "Deanonymization Checkbox"]
+    "Ottieni EncCF": ["ticketNumber", "taxId", "recipientType"],
+    "Ottieni CF": ["personId", "recipientType"],
+    "Ottieni notifica": ["ticketNumber","iun"],
+    "Ottieni notifiche di una PA": ["ticketNumber", "ipaCode", "referenceMonth"],
+    // use case 9 dissabled for now
+    // "Ottieni log completi + organizzazione": ["ticketNumber", "taxId", "Time interval"],
+    "Ottieni log completi": ["ticketNumber", "taxId", "iun", "personId", "Time interval", "deanonimization"],
+    "Ottieni log di processo": ["traceId", "Time interval"]
 }
 
 /**
@@ -80,17 +82,17 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         selectItems: Object.keys(MenuItems)
     },
     "Ticket Number": {
-            name: "Ticket Number",
+            name: "ticketNumber",
             componentType: "textfield",
             label: "Numero Ticket",
             hidden: false,
             rules: {
-                pattern: regex.ALPHA_NUMERIC_WITHOUT_SPECIAL_CHAR_PATTERN,
-                required: "This field is required."
+                // pattern: regex.ALPHA_NUMERIC_WITHOUT_SPECIAL_CHAR_PATTERN,
+                required: "Inserimento errato"
             }
     },
     "Codice Fiscale": {
-            name: "Codice Fiscale",
+            name: "taxId",
             componentType: "textfield",
             label: "Codice Fiscale",
             hidden: false,
@@ -98,11 +100,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                 pattern: regex.FISCAL_CODE_PATTERN,
                 minLength: 16,
                 maxLength: 16,
-                required: "This field is required."
+                required: "Inserimento errato"
             }
     },
     "Unique Identifier": {
-            name: "Unique Identifier",
+            name: "personId",
             componentType: "textfield",
             label: "Codice Univoco",
             hidden: false,
@@ -110,34 +112,43 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                 pattern: regex.UNIQUE_IDENTIFIER_PATTERN,
                 minLength: 1,
                 maxLength: 100,
-                required: "This field is required."
+                required: "Inserimento errato"
             }
     },
     "IUN": {
-            name: "IUN",
+            name: "iun",
             componentType: "textfield",
             label: "IUN",
             hidden: false,
             rules: {
-                required: "This field is required."
+                required: "Inserimento errato"
             }
     },
     "IPA Code": {
-            name: "IPA Code",
+            name: "ipaCode",
             componentType: "textfield",
             label: "IPA Code",
             hidden: false,
             rules: {
-                required: "This field is required."
+                required: "Inserimento errato"
             }
     },
+    "Trace ID": {
+        name: "traceId",
+        componentType: "textfield",
+        label: "Trace ID",
+        hidden: false,
+        rules: {
+                required: "Inserimento errato"
+        }
+    },
     "Month": {
-            name: "Month",
+            name: "referenceMonth",
             componentType: "datePicker",
             label: "Mese",
             hidden: false,
             rules: {
-                required: "This field is required.",
+                required: "Inserimento errato",
                 valueAsDate: true,
             },
             view: ["month", "year"],
@@ -150,17 +161,17 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "Time interval",
             hidden: false,
             rules: {
-                required: "This field is required.",
+                required: "Inserimento errato",
                 validate: {
                     validateInterval: (dates: Array<any>) => {
-                        let startDate = moment(dates[0].value);
-                        let endDate = moment(dates[1].value);
+                        let startDate = moment(dates[0]);
+                        let endDate = moment(dates[1]);
                         let interval = endDate.diff(startDate, "days");
-                        return interval <= 90 || "Time interval can't be more than 3 months."
+                        return interval <= 91 || "Time interval can't be more than 3 months."
                     },
                     checkDates: (dates: Array<any>) => {
-                        let startDate = moment(dates[0].value);
-                        let endDate = moment(dates[1].value);
+                        let startDate = moment(dates[0]);
+                        let endDate = moment(dates[1]);
                         return startDate.isBefore(endDate) || 
                             "Start date can't be after the end date"
                     }
@@ -174,19 +185,19 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         type: "date",
         rules: {
-            required: "This field is required.",
+            required: "Inserimento errato",
             valueAsDate: true,
         },
         view: ["day"],
         format: "yyyy-MM-dd"
     },
     "Person Radio Buttons": {
-        name: "Person Radio Buttons",
+        name: "recipientType",
         componentType: "radioButtons",
         label: "Tipo personale",
         hidden: false,
         rules: {
-            required: "This field is required."
+            required: "Inserimento errato"
         },
         options: [
             {
@@ -199,13 +210,10 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             }]
     },
     "Deanonymization Checkbox": {
-        name: "Deanonymization Checkbox",
+        name: "deanonimization",
         componentType: "checkbox",
         label: "Deanonimizzazione dati",
         hidden: false,
-        rules: {
-            required: "This field is required."
-        },
     },
     "Email": {
         name: "email",
@@ -214,7 +222,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         type: "email",
         rules: {
-            required: "This field is required."
+            required: "Inserimento errato"
         },
     },
     "Password": {
@@ -224,7 +232,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         type: "password",
         rules: {
-            required: "This field is required."
+            required: "Inserimento errato"
         },
     },
 }

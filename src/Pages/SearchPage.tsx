@@ -15,13 +15,13 @@ const SearchPage = () => {
                 <Header />
             </Grid>
             <Grid item>
-                <SnackbarComponent severity="errorData"/>
+                <SnackbarComponent />
             </Grid>
             <Grid item>
                 <SearchForm />
             </Grid>
             <Grid item>
-                <ResponseData type={"password"} value={"ac5r2ss0"}/>
+                <ResponseData />
             </Grid>
         </Grid>
   );
