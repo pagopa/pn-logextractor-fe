@@ -87,7 +87,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "Numero Ticket",
             hidden: false,
             rules: {
-                // pattern: regex.ALPHA_NUMERIC_WITHOUT_SPECIAL_CHAR_PATTERN,
+                pattern: regex.ALPHA_NUMERIC_WITHOUT_SPECIAL_CHAR_PATTERN,
                 required: "Inserimento errato"
             }
     },
