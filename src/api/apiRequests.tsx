@@ -2,7 +2,7 @@
 import { getLogsProcessesType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType, 
     getOperatorsLogsType, getPersonBasicDataType, getPersonsLogsType } from "./apiRequestTypes";
 import { http as apiClient } from "./axiosClient"
-
+import { base64StringToBlob } from "blob-util";
 
 /**
  * Return the person's fiscal code or ID depending on the input received
@@ -23,8 +23,15 @@ const getPersonBasicData = async (payload: getPersonBasicDataType)  => {
  */
 const getPersonsLogs = async (data: getPersonsLogsType) => {
     return await apiClient.getPersonsLogs(data)
-        .then((result: any) => {
+            .then((result: any) => { 
+            var file = base64StringToBlob(result.data, "application/zip");
+            var fileURL = URL.createObjectURL(file);
+            var fileLink = document.createElement('a');
+            fileLink.href = fileURL;
+            fileLink.download = "Response";
+            fileLink.click();
             return result;
+               
         })
         .catch((error: any) => {
             throw error;
@@ -98,8 +105,6 @@ const getLogsProcesses = async (data: getLogsProcessesType) => {
         throw error;
     }) 
 }
-
-
 
 export default { getPersonBasicData, getPersonsLogs, getOperatorsLogs, getLogsPasswords,
     getNotificationsInfoLogs, getNotificationsMonthlyStatsLogs, getLogsProcesses }
