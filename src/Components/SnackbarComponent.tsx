@@ -3,7 +3,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 import { updateSnackbacrOpened, opened, statusCode } from "../redux/snackbarSlice";
 import { useDispatch, useSelector } from 'react-redux';
-import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+import { infoMessages } from "../helpers/messagesConstants"
 /** 
  * connecting severity with the type of alert
  * @enum 
@@ -18,14 +18,12 @@ enum Severity {
 
 /** 
  * connecting the alert with specific message
- * @enum 
  * @readonly
- * @type {string} 
  */
-enum SeverityMessage {
-  "OK" = "Operazione completata con successo",
-  "Bad Request" = "Informazioni non valide",
-  "Internal Server Error" = "Errore durante l'elaborazione della richiesta",
+const SeverityMessage: {[key: string]: string} = {
+  "OK": infoMessages.OK_RESPONSE,
+  "Bad Request": infoMessages.BAD_REQUEST_RESPONSE,
+  "Internal Server Error": infoMessages.INTERNEL_SERVER_ERROR_RESPONSE,
 }
 
 /** 
@@ -88,7 +86,7 @@ const SnackbarComponent = () => {
         <Alert onClose={handleClose}
            variant="filled" severity={Severity[severity as keyof typeof Severity]}
         >
-          {SeverityMessage[severity as keyof typeof Severity]}
+          {SeverityMessage[severity]}
         </Alert>
       </Snackbar>
     )

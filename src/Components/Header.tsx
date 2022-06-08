@@ -5,6 +5,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { infoMessages } from "../helpers/messagesConstants"
 
 /**
  * General component presenting the header of the app.
@@ -66,13 +67,13 @@ const Header = () => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure you want to log out?
+              {infoMessages.LOGOUT_CONFIRMATION}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseModal}>No</Button>
+            <Button onClick={handleCloseModal}>Annulla</Button>
             <Button onClick={handleLogOut} autoFocus>
-              Yes
+              Esci
             </Button>
           </DialogActions>
         </Dialog>

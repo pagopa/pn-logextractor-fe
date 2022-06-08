@@ -285,7 +285,7 @@ const SearchForm = () => {
                                                         <>
                                                             <FormField field={field} onChange={onChange} value={value}/> 
                                                             <FormHelperText error>{errors[field.name] ? 
-                                                                errors[field.name].message ? errors[field.name].message : "Incorrect value!"
+                                                                errors[field.name].message 
                                                                 :  " "}</FormHelperText>
                                                         </>
                                                                                  

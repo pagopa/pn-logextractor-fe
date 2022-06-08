@@ -7,7 +7,7 @@ import DatePickerComponent from "./DatePickerComponent";
 import DateRangePickerComponent from "./DataRangePickerComponent";
 import moment from "moment";
 import { CalendarPickerView } from "@mui/lab";
-
+import { errorMessages } from "../helpers/messagesConstants"
 
 /**
  * Items for the Tipo Estrazione and their coresponding fields
@@ -88,7 +88,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             hidden: false,
             rules: {
                 // pattern: regex.ALPHA_NUMERIC_WITHOUT_SPECIAL_CHAR_PATTERN,
-                required: "Inserimento errato"
+                required: errorMessages.REQUIRED
             }
     },
     "Codice Fiscale": {
@@ -97,10 +97,19 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "Codice Fiscale",
             hidden: false,
             rules: {
-                pattern: regex.FISCAL_CODE_PATTERN,
-                minLength: 16,
-                maxLength: 16,
-                required: "Inserimento errato"
+                pattern: {
+                    value: regex.FISCAL_CODE_PATTERN,
+                    message: errorMessages.INCORRECT
+                },
+                minLength: {
+                    value: 16,
+                    message: errorMessages.FISCAL_CODE_LENGTH
+                },
+                maxLength: {
+                    value: 16,
+                    message: errorMessages.FISCAL_CODE_LENGTH
+                },
+                required: errorMessages.REQUIRED
             }
     },
     "Unique Identifier": {
@@ -109,10 +118,19 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "Codice Univoco",
             hidden: false,
             rules: {
-                pattern: regex.UNIQUE_IDENTIFIER_PATTERN,
-                minLength: 1,
-                maxLength: 100,
-                required: "Inserimento errato"
+                pattern: {
+                    value: regex.UNIQUE_IDENTIFIER_PATTERN,
+                    message: errorMessages.INCORRECT
+                },
+                minLength: {
+                    value: 1,
+                    message: errorMessages.UNIQUES_IDENTIFIER_LENGTH
+                },
+                maxLength: {
+                    value: 100,
+                    message: errorMessages.UNIQUES_IDENTIFIER_LENGTH
+                },
+                required: errorMessages.REQUIRED
             }
     },
     "IUN": {
@@ -121,7 +139,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "IUN",
             hidden: false,
             rules: {
-                required: "Inserimento errato"
+                required: errorMessages.REQUIRED
             }
     },
     "IPA Code": {
@@ -130,7 +148,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "IPA Code",
             hidden: false,
             rules: {
-                required: "Inserimento errato"
+                required: errorMessages.REQUIRED
             }
     },
     "Trace ID": {
@@ -139,7 +157,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         label: "Trace ID",
         hidden: false,
         rules: {
-                required: "Inserimento errato"
+                required: errorMessages.REQUIRED
         }
     },
     "Month": {
@@ -148,8 +166,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "Mese",
             hidden: false,
             rules: {
-                required: "Inserimento errato",
-                valueAsDate: true,
+                required: errorMessages.REQUIRED,
+                valueAsDate: {
+                    value: true,
+                    message: errorMessages.INCORRECT
+                },
             },
             view: ["month", "year"],
             type: "month",
@@ -161,19 +182,18 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "Time interval",
             hidden: false,
             rules: {
-                required: "Inserimento errato",
+                required: errorMessages.REQUIRED,
                 validate: {
                     validateInterval: (dates: Array<any>) => {
                         let startDate = moment(dates[0]);
                         let endDate = moment(dates[1]);
                         let interval = endDate.diff(startDate, "days");
-                        return interval <= 91 || "Time interval can't be more than 3 months."
+                        return interval <= 91 || errorMessages.DATES_INTERVAL
                     },
                     checkDates: (dates: Array<any>) => {
                         let startDate = moment(dates[0]);
                         let endDate = moment(dates[1]);
-                        return startDate.isBefore(endDate) || 
-                            "Start date can't be after the end date"
+                        return startDate.isBefore(endDate) || errorMessages.DATES_ORDER
                     }
                 }
             }
@@ -185,8 +205,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         type: "date",
         rules: {
-            required: "Inserimento errato",
-            valueAsDate: true,
+            required: errorMessages.REQUIRED,
+            valueAsDate: {
+                value: true,
+                message: errorMessages.INCORRECT
+            },
         },
         view: ["day"],
         format: "yyyy-MM-dd"
@@ -197,7 +220,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         label: "Tipo personale",
         hidden: false,
         rules: {
-            required: "Inserimento errato"
+            required: errorMessages.REQUIRED
         },
         options: [
             {
@@ -222,7 +245,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         type: "email",
         rules: {
-            required: "Inserimento errato"
+            required: errorMessages.REQUIRED
         },
     },
     "Password": {
@@ -232,7 +255,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         type: "password",
         rules: {
-            required: "Inserimento errato"
+            required: errorMessages.REQUIRED
         },
     },
 }
