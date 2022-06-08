@@ -55,8 +55,10 @@ const SearchForm = () => {
     /**
      * form functionalities from react-hook-forms
      */
-    const { handleSubmit, control, watch, formState: { errors, isDirty, touchedFields, dirtyFields }, reset, resetField, getValues} = useForm({
-        mode: 'onSubmit',
+    const { handleSubmit, control, watch, formState: { errors, isDirty, touchedFields, dirtyFields }, 
+                reset, resetField, getValues, clearErrors} = useForm({
+        mode: 'onBlur',
+        reValidateMode: "onBlur",
         defaultValues: defaultFormValues
     });
 
@@ -100,12 +102,10 @@ const SearchForm = () => {
         }
         if(selectedValue === "Ottieni log completi" ){
             if(Object.keys(dirtyFields).length == 0 || (Object.keys(dirtyFields).length == 1 && 
-                ["Deanonymization Checkbox", "ticketNumber"].includes( Object.keys(dirtyFields)[0]))){
+                ["deanonimization", "ticketNumber", "Time interval"].includes( Object.keys(dirtyFields)[0]))){
                 neededFields = MenuItems["Ottieni log completi"].filter(item => item != "deanonimization");
+                clearErrors();
             }else{
-                if(Object.keys(dirtyFields).includes("Time interval")){
-                    neededFields = ["ticketNumber", "taxId", "Time interval", "personId"];
-                }
                 if(Object.keys(dirtyFields).includes("taxId")){
                     neededFields = ["ticketNumber", "taxId", "Time interval"];
                 }
@@ -283,7 +283,12 @@ const SearchForm = () => {
                                                 }) => {
                                                     return(
                                                         <>
-                                                            <FormField field={field} onChange={onChange} value={value}/> 
+                                                            <FormField field={field} value={value} onBlur={onBlur}
+                                                            onChange={(value: any) => {
+                                                                onChange(value)
+                                                                value.nativeEvent && value.nativeEvent.data === null && clearErrors(name) 
+                                                            }}
+                                                            />
                                                             <FormHelperText error>{errors[field.name] ? 
                                                                 errors[field.name].message 
                                                                 :  " "}</FormHelperText>
@@ -301,7 +306,9 @@ const SearchForm = () => {
                     
                         <Grid item container direction="row" justifyContent="flex-start">
                             <Grid item>
-                                <Button disabled={Object.keys(errors).length > 0} sx={{top: "-2px"}} size="large" type="submit" variant="outlined">Ricerca</Button>                       
+                                <Button size="large" type="submit" variant="outlined" sx={{top: "-2px"}} 
+                                        disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
+                                >Ricerca</Button>                       
                             </Grid>
                         </Grid>
                     </Grid>

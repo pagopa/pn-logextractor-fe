@@ -16,7 +16,11 @@ type Props = {
   /**
    * value of the field
    */
-  value?: any
+  value?: any,
+  /**
+   * function for handling blur of this textfield
+   */
+  onBlur: any
 }
 
 /**
@@ -35,6 +39,12 @@ const TextFieldComponent = (props: Props) => {
             id={field.label} 
             label={field.label}
             variant="outlined"
+            onBlur={
+              props.value && props.value.length ?
+              props.onBlur
+              :
+              () => {}
+            }
             onChange={props.onChange}
             />
     )

@@ -19,7 +19,7 @@ let MenuItems: {[key: string]: Array<string>} = {
     "Ottieni notifiche di una PA": ["ticketNumber", "ipaCode", "referenceMonth"],
     // use case 9 dissabled for now
     // "Ottieni log completi + organizzazione": ["ticketNumber", "taxId", "Time interval"],
-    "Ottieni log completi": ["ticketNumber", "taxId", "iun", "personId", "Time interval", "deanonimization"],
+    "Ottieni log completi": ["ticketNumber", "taxId", "iun", "personId", "Time interval"],
     "Ottieni log di processo": ["traceId", "Time interval"]
 }
 
@@ -270,6 +270,7 @@ type Props = {
     field: FieldsProps,
     onChange?: any,
     value?:any,
+    onBlur?: any
 }
 
 /**
@@ -277,12 +278,12 @@ type Props = {
  * @component
  * @param {Props} props
  */
-const FormField = ({ field, onChange, value }: Props) => { 
+const FormField = ({ field, onChange, value, onBlur }: Props) => { 
     const componentType : string = field.componentType;
     return <Grid item>
         {
             componentType == "textfield" && 
-                <TextFieldComponent value={value} onChange={onChange} field={field} />
+                <TextFieldComponent value={value} onChange={onChange} field={field}  onBlur={onBlur}/>
         }
         {
             componentType == "select" &&
