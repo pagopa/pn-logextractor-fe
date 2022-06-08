@@ -8,6 +8,7 @@ import { getLogsProcessesType, getNotificationsInfoLogsType, getNotificationsMon
     getPersonBasicDataType, getPersonsLogsType } from "../api/apiRequestTypes";
 import * as snackbarActions from "../redux/snackbarSlice";
 import * as responseActions from "../redux/responseSlice";
+import * as spinnerActions from "../redux/spinnerSlice";
 import { useDispatch } from 'react-redux';
 
 /**
@@ -152,6 +153,7 @@ const SearchForm = () => {
      */
     const onSubmit = (data: any) => {
         resetStore();
+        dispatch(spinnerActions.updateSpinnerOpened(true));
         const payload = createPayload(data);
         if(selectedValue === "Ottieni EncCF" || selectedValue === "Ottieni CF"){
             createRequest(payload);
@@ -221,12 +223,17 @@ const SearchForm = () => {
                 break;
         }
         if(request){
-             request!.then(res => {
-                        updateSnackbar(res);
-                        updateResponse(payload.password ? {password: payload.password} : res.data);
-                    })
-                    .catch(error => updateSnackbar(error.response)) 
-        }
+            request.then(res => {
+                    updateSnackbar(res);
+                    updateResponse(payload.password ? {password: payload.password} : res.data);
+                    dispatch(spinnerActions.updateSpinnerOpened(false));
+                })
+                .catch(error => {
+                    updateSnackbar(error.response);
+                    dispatch(spinnerActions.updateSpinnerOpened(false));
+                }) 
+        }  
+        
     }
 
     /**
