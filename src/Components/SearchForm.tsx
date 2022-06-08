@@ -10,7 +10,7 @@ import * as snackbarActions from "../redux/snackbarSlice";
 import * as responseActions from "../redux/responseSlice";
 import * as spinnerActions from "../redux/spinnerSlice";
 import { useDispatch } from 'react-redux';
-
+import { base64StringToBlob } from "blob-util";
 /**
  * default values of the form fields
  */
@@ -155,19 +155,7 @@ const SearchForm = () => {
         resetStore();
         dispatch(spinnerActions.updateSpinnerOpened(true));
         const payload = createPayload(data);
-        if(selectedValue === "Ottieni EncCF" || selectedValue === "Ottieni CF"){
-            createRequest(payload);
-        }else{
-            apiRequests.getLogsPasswords()         
-            .then((res: any) => {
-                payload.password = res.data.password;
-                createRequest(payload);
-            })
-            .catch(error => {
-                updateSnackbar(error.response);
-            })
-        }
-        
+        createRequest(payload); 
     }
 
     /**
@@ -224,9 +212,11 @@ const SearchForm = () => {
         }
         if(request){
             request.then(res => {
-                    updateSnackbar(res);
-                    updateResponse(payload.password ? {password: payload.password} : res.data);
-                    dispatch(spinnerActions.updateSpinnerOpened(false));
+                console.log(res.data.zip)
+                updateSnackbar(res);
+                updateResponse(payload.password ? {password: payload.password} : res.data);
+                res.data.zip && downloadZip(res.data.zip);
+                dispatch(spinnerActions.updateSpinnerOpened(false));
                 })
                 .catch(error => {
                     updateSnackbar(error.response);
@@ -259,6 +249,19 @@ const SearchForm = () => {
      */
     const resetStore = () => {
         dispatch(snackbarActions.resetState());
+    }
+
+    /**
+     * downloading zip file 
+     * @param zip file in base64
+     */
+    const downloadZip = (zip: string) => {
+        var file = base64StringToBlob(zip, "application/zip");
+        var fileURL = URL.createObjectURL(file);
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.download = "export";
+        fileLink.click();
     }
 
     return(

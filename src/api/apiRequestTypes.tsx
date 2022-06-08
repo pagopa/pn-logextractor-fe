@@ -20,7 +20,6 @@ type getPersonsLogsType = {
     iun?: number;
     dateFrom?: string;
     dateTo?: string;
-    password: string
 }
 
 /**
@@ -31,7 +30,6 @@ type getOperatorsLogsType = {
     taxId: string;
     dateFrom: string;
     dateTo: string;
-    password: string;
 }
 
 /**
@@ -40,7 +38,6 @@ type getOperatorsLogsType = {
 type getNotificationsInfoLogsType = {
     ticketNumber: string;
     iun: number;
-    password: string;
 }
 
 /**
@@ -50,7 +47,6 @@ type getNotificationsMonthlyStatsLogsType = {
     ticketNumber: string;
     ipaCode: number;
     referenceMonth: string;
-    password: string;
 }
 
 /**
@@ -60,7 +56,6 @@ type getLogsProcessesType = {
     traceId: string;
     dateFrom: string;
     dateTo: string;
-    password: string;
 }
 
 export type { getPersonBasicDataType, getPersonsLogsType, getOperatorsLogsType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType, getLogsProcessesType }

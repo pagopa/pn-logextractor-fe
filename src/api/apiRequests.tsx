@@ -24,12 +24,6 @@ const getPersonBasicData = async (payload: getPersonBasicDataType)  => {
 const getPersonsLogs = async (data: getPersonsLogsType) => {
     return await apiClient.getPersonsLogs(data)
             .then((result: any) => { 
-            var file = base64StringToBlob(result.data, "application/zip");
-            var fileURL = URL.createObjectURL(file);
-            var fileLink = document.createElement('a');
-            fileLink.href = fileURL;
-            fileLink.download = "export";
-            fileLink.click();
             return result;
                
         })
@@ -81,19 +75,6 @@ const getNotificationsMonthlyStatsLogs = async (data: getNotificationsMonthlySta
 }
 
 /**
- * Get an automatically generated password from the server
- */
-const getLogsPasswords = async () => {
-    return await apiClient.getLogsPasswords()
-        .then((result: any) => {
-            return result;
-        })
-        .catch((error: any) => {
-            throw error;
-        }) 
-}
-
-/**
  * Extract all log paths by given a specific traceId
  */
 const getLogsProcesses = async (data: getLogsProcessesType) => {
@@ -106,5 +87,5 @@ const getLogsProcesses = async (data: getLogsProcessesType) => {
     }) 
 }
 
-export default { getPersonBasicData, getPersonsLogs, getOperatorsLogs, getLogsPasswords,
+export default { getPersonBasicData, getPersonsLogs, getOperatorsLogs,
     getNotificationsInfoLogs, getNotificationsMonthlyStatsLogs, getLogsProcesses }
