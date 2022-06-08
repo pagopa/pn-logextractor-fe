@@ -28,7 +28,7 @@ const getPersonsLogs = async (data: getPersonsLogsType) => {
             var fileURL = URL.createObjectURL(file);
             var fileLink = document.createElement('a');
             fileLink.href = fileURL;
-            fileLink.download = "Response";
+            fileLink.download = "export";
             fileLink.click();
             return result;
                
