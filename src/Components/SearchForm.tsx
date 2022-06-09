@@ -207,6 +207,9 @@ const SearchForm = () => {
             case "Ottieni log completi": 
                 request = apiRequests.getPersonsLogs(payload as getPersonsLogsType)
                 break;            
+            case "Ottieni log di processo": 
+                request = apiRequests.getLogsProcesses(payload as getLogsProcessesType)
+                break;            
             default:
                 break;
         }
