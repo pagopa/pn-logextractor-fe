@@ -212,9 +212,12 @@ const SearchForm = () => {
         }
         if(request){
             request.then(res => {
-                console.log(res.data.zip)
                 updateSnackbar(res);
-                updateResponse(payload.password ? {password: payload.password} : res.data);
+                updateResponse(
+                    res.data.password ? {password: res.data.password} 
+                    : 
+                    selectedValue === "Ottieni CF" ? {taxId: res.data.data} : {internalId: res.data.data}
+                    );
                 res.data.zip && downloadZip(res.data.zip);
                 dispatch(spinnerActions.updateSpinnerOpened(false));
                 })
