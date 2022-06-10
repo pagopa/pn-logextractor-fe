@@ -11,6 +11,7 @@ import * as responseActions from "../redux/responseSlice";
 import * as spinnerActions from "../redux/spinnerSlice";
 import { useDispatch } from 'react-redux';
 import { base64StringToBlob } from "blob-util";
+import SearchIcon from '@mui/icons-material/Search';
 /**
  * default values of the form fields
  */
@@ -323,7 +324,7 @@ const SearchForm = () => {
                     
                         <Grid item container direction="row" justifyContent="center">
                             <Grid item>
-                                <Button size="large" type="submit" variant="outlined" sx={{top: "-2px"}} 
+                                <Button size="large" type="submit" variant="outlined" sx={{top: "-2px"}} endIcon={<SearchIcon />}
                                         disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
                                 >Ricerca</Button>                       
                             </Grid>
