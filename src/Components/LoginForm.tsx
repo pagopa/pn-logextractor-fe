@@ -1,4 +1,4 @@
-import { Grid, Button, Box, FormLabel } from "@mui/material";
+import { Grid, Button, Box, FormLabel, Card } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FieldsProperties, FormField } from "./FormFields";
@@ -38,7 +38,7 @@ const LoginForm = () => {
             alignItems="center"
             minHeight="100vh"
         >
-            <Grid container item direction="column" xs={6} sx={{border: "2px black dotted", padding: "5%"}}>
+            <Card elevation={24} sx={{ width: 1/2, padding: "5%", boxShadow: "0px 3px 3px -2px "}}>
                 <form onSubmit={handleSubmit(data => onSubmit(data))}>
                     <FormLabel sx={{fontWeight: "bold", color: "#0073e6", fontSize: "2.125rem"}} component="legend">LOGIN</FormLabel>
                     <Grid container direction="column" spacing={3}>
@@ -73,7 +73,7 @@ const LoginForm = () => {
                         </Grid>
                     </Grid>
                 </form>
-            </Grid>
+            </Card>
         </Box>
     )
 }

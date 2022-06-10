@@ -1,4 +1,4 @@
-import { Button, Container, FormHelperText, Grid } from "@mui/material";
+import { Button, Card, Container, FormHelperText, Grid } from "@mui/material";
 import{ useEffect, useLayoutEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { FieldsProperties, FieldsProps, FormField, MenuItems } from "./FormFields";
@@ -280,7 +280,7 @@ const SearchForm = () => {
 
     return(
         <Container>
-            <Grid container direction="column" rowSpacing={4} sx={{border: "2px black dotted", padding: "5%"}}>
+            <Card elevation={24} sx={{ width: 1, padding: "5%", boxShadow: "0px 3px 3px -2px "}}>
                 <form onSubmit={handleSubmit(data => onSubmit(data))}>
                         <Grid container item direction="column" rowSpacing={5}>
                             <Grid item container direction="row" spacing={2} alignItems="center">
@@ -321,7 +321,7 @@ const SearchForm = () => {
                                 }
                         </Grid>
                     
-                        <Grid item container direction="row" justifyContent="flex-start">
+                        <Grid item container direction="row" justifyContent="center">
                             <Grid item>
                                 <Button size="large" type="submit" variant="outlined" sx={{top: "-2px"}} 
                                         disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
@@ -330,7 +330,7 @@ const SearchForm = () => {
                         </Grid>
                     </Grid>
                 </form>
-            </Grid>
+            </Card>
         </Container>
 
     )
