@@ -32,6 +32,7 @@ const TextFieldComponent = (props: Props) => {
   const field = props.field
     return(
          <TextField 
+            required={field.required}
             fullWidth
             type={field.type}
             hidden={field.hidden!}

@@ -41,6 +41,10 @@ type Props = {
      * the limit of the difference between the start date and the end date
      */
     intervalLimit?: Array<Number | string>
+    /**
+     * if the field is required
+     */
+    required: boolean
 }
 
 /**
@@ -88,7 +92,7 @@ const DateRangePickerComponent = (props: Props) => {
                     disableFuture
                     inputFormat="yyyy-MM-dd"
                     mask={"____-__-__"} 
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => <TextField {...params} required={props.required} />}
                     />
                 </LocalizationProvider>
             </Grid>
@@ -103,7 +107,7 @@ const DateRangePickerComponent = (props: Props) => {
                 inputFormat="yyyy-MM-dd"
                 mask={"____-__-__"} 
                 disableFuture
-                renderInput={(params) => <TextField {...params} />}
+                renderInput={(params) => <TextField {...params} required={props.required} />}
                 />
             </LocalizationProvider>
            </Grid>  

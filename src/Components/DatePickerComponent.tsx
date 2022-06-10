@@ -4,19 +4,16 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { CalendarPickerView } from '@mui/lab';
 import moment from 'moment';
+import { FieldsProps } from './FormFields';
 
 /**
  * @typedef {Object} Props
  */
 type Props = {
   /**
-   * label of the field
+   * field properties 
    */
-  label: string,
-  /**
-   * calendar type
-   */
-  view: CalendarPickerView[],
+  field: FieldsProps,
   /**
      * value of the field if there is any
   */
@@ -25,11 +22,6 @@ type Props = {
   * function handling the change of the field 
   */
   onChange: any,
-  /**
-   *the format which the date to be shown and saved
-   */
-  format: string
-  
 }
 
 /**
@@ -38,27 +30,29 @@ type Props = {
  */
 const DatePickerComponent = (props: Props) => {
 
+  const field = props.field
+
   /**
    * handle change of the date field
    * @param e the selected date
    */
   const handleChange = (e: any) => {
-      e =  moment(e).format(props.format.toUpperCase())
+      e =  moment(e).format(field.format!.toUpperCase())
       props.onChange(e);
   }
 
     return(
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
-          views={props.view}
-          key={props.label}
-          label={props.label}
+          views={field.view}
+          key={field.label}
+          label={field.label}
           value={props.value}
           onChange={e => handleChange(e)}
           disableFuture
-          inputFormat={props.format}
+          inputFormat={field.format}
           mask={"____-__-__"} 
-          renderInput={(params) => <TextField {...params} />}
+          renderInput={(params) => <TextField {...params} required={field.required} />}
         />
     </LocalizationProvider>
     )

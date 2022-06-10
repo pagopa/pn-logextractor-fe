@@ -68,6 +68,10 @@ type FieldsProps = {
      * the format of the date, if the component is a calendar
      */
     format?: string
+    /**
+     * if the field is required
+     */
+    required?: boolean
 }
 
 /**
@@ -92,7 +96,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                     message: errorMessages.INCORRECT
                 },
                 required: errorMessages.REQUIRED
-            }
+            },
+            required: false
     },
     "Codice Fiscale": {
             name: "taxId",
@@ -113,7 +118,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                     message: errorMessages.FISCAL_CODE_LENGTH
                 },
                 required: errorMessages.REQUIRED
-            }
+            },
+            required: false
     },
     "Unique Identifier": {
             name: "personId",
@@ -134,7 +140,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                     message: errorMessages.UNIQUES_IDENTIFIER_LENGTH
                 },
                 required: errorMessages.REQUIRED
-            }
+            },
+            required: false
     },
     "IUN": {
             name: "iun",
@@ -143,7 +150,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             hidden: false,
             rules: {
                 required: errorMessages.REQUIRED
-            }
+            },
+            required: false
     },
     "IPA Code": {
             name: "ipaCode",
@@ -152,7 +160,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             hidden: false,
             rules: {
                 required: errorMessages.REQUIRED
-            }
+            },
+            required: false
     },
     "Trace ID": {
         name: "traceId",
@@ -161,7 +170,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         rules: {
                 required: errorMessages.REQUIRED
-        }
+        },
+        required: false
     },
     "Month": {
             name: "referenceMonth",
@@ -177,13 +187,15 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             },
             view: ["month", "year"],
             type: "month",
-            format: "yyyy-MM"
+            format: "yyyy-MM",
+            required: false
     },
     "Time interval": {
             name: "Time interval",
             componentType: "dateRangePicker",
             label: "Time interval",
             hidden: false,
+            required: false,
             rules: {
                 required: errorMessages.REQUIRED,
                 validate: {
@@ -215,7 +227,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             },
         },
         view: ["day"],
-        format: "yyyy-MM-dd"
+        format: "yyyy-MM-dd",
+        required: false
     },
     "Person Radio Buttons": {
         name: "recipientType",
@@ -299,11 +312,11 @@ const FormField = ({ field, onChange, value, onBlur }: Props) => {
         }
         {
             componentType == "datePicker" &&
-                <DatePickerComponent format={field.format!} onChange={onChange} label={field.label} view={field.view!} value={value}/>
+                <DatePickerComponent field={field} onChange={onChange} value={value}/>
         }
         {
             componentType == "dateRangePicker" &&
-                <DateRangePickerComponent onChange={onChange} intervalLimit={[3, "months"]}  datePickers={[
+                <DateRangePickerComponent required={field.required!} onChange={onChange} intervalLimit={[3, "months"]}  datePickers={[
                     {
                         label: "Dal",
                         view:["day"],

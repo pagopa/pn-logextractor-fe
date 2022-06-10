@@ -79,11 +79,14 @@ const SearchForm = () => {
      */
     useEffect(() => {
         const values = getValues();
-        setSelectedValue(values["Tipo Estrazione"].toString());
-        setFields(filterFields(MenuItems[values["Tipo Estrazione"].toString()]));
         reset({...defaultFormValues, "Tipo Estrazione": values["Tipo Estrazione"]});
+        setSelectedValue(values["Tipo Estrazione"].toString());
         resetStore();
     }, [watchTipoEstrazione])
+
+    useEffect(() => {
+        setFields(filterFields(MenuItems[selectedValue]));
+    }, [selectedValue])
 
     useLayoutEffect(() => () => {
         resetStore();
@@ -131,10 +134,15 @@ const SearchForm = () => {
      */
     const filterFields = (neededFields:string[]): FieldsProps[] => {
         const allFields = Object.values(FieldsProperties);
-        return allFields.map(field => (neededFields.includes(field.name) || field.name == "Tipo Estrazione" ?
-                    field :
-                    hideField(field)
-                    ));
+        return allFields.map(field => {
+            if(neededFields.includes(field.name) || field.name == "Tipo Estrazione"){
+                if(selectedValue === "Ottieni log completi" && neededFields.length > 4){
+                    return {...field, required: false}
+                }
+                return {...field, required: true}
+            }
+            return hideField(field)
+        });
     }
 
     /**
