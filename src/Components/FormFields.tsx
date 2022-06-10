@@ -282,9 +282,9 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         rules: {
             required: errorMessages.INCORRECT_PASSWORD,
             pattern: {
-                    value: regex.PASSWORD,
-                    message: errorMessages.INCORRECT_PASSWORD
-                },
+                value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[a-zA-Z0-9!@#$%^&()_+]).{16,}$/,
+                message: errorMessages.INCORRECT_PASSWORD
+            },
         },
     },
 }
