@@ -1,8 +1,18 @@
+import { Grid } from "@mui/material"
 import LoginForm from "../Components/LoginForm"
+import SnackbarComponent from "../Components/SnackbarComponent"
 
 const LoginPage = () => {
     return(
-        <LoginForm />
+        <Grid container direction="column" justifyContent="center">
+            <Grid item>
+                <SnackbarComponent />
+            </Grid>
+            <Grid item>
+                <LoginForm />
+            </Grid>
+        </Grid>
+        
     )
 }
 
