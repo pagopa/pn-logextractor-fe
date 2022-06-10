@@ -19,7 +19,7 @@ let MenuItems: {[key: string]: Array<string>} = {
     "Ottieni notifiche di una PA": ["ticketNumber", "ipaCode", "referenceMonth"],
     // use case 9 dissabled for now
     // "Ottieni log completi + organizzazione": ["ticketNumber", "taxId", "Time interval"],
-    "Ottieni log completi": ["ticketNumber", "taxId", "iun", "personId", "Time interval"],
+    "Ottieni log completi": ["ticketNumber", "taxId", "iun", "personId"],
     "Ottieni log di processo": ["traceId", "Time interval"]
 }
 

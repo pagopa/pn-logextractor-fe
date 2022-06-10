@@ -111,7 +111,7 @@ const SearchForm = () => {
                 clearErrors();
             }else{
                 if(Object.keys(dirtyFields).includes("taxId")){
-                    neededFields = ["ticketNumber", "taxId", "Time interval"];
+                    neededFields = ["ticketNumber", "taxId", "Time interval", "recipientType"];
                 }
                 if(Object.keys(dirtyFields).includes("personId")){
                     neededFields = ["ticketNumber", "personId", "Time interval"];
