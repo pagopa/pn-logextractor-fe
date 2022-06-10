@@ -1,4 +1,4 @@
-import { Grid, Button, Box, FormLabel, Card } from "@mui/material";
+import { Grid, Button, Box, FormLabel, Card, FormHelperText } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FieldsProperties, FormField } from "./FormFields";
@@ -16,8 +16,10 @@ const defaultFormValues: {[key: string]: string} = {
  * @component
  */
 const LoginForm = () => {
-    const { handleSubmit, control, watch, formState, reset, getValues,  } = useForm({
-        defaultValues: defaultFormValues
+    const { handleSubmit, control, watch, formState: { errors, isDirty, touchedFields, dirtyFields }, reset, getValues,  } = useForm({
+        defaultValues: defaultFormValues,
+        mode: 'onSubmit',
+        reValidateMode: 'onSubmit'
     });
 
     const navigate = useNavigate();
@@ -46,12 +48,18 @@ const LoginForm = () => {
                             <Controller 
                                 control={control}
                                 name={"email"}
+                                rules={FieldsProperties["Email"].rules}
                                 render={({
                                     field: { onChange, onBlur, value, name, ref },
                                     fieldState: { invalid, isTouched, isDirty, error },
                                     formState,
                                 }) => (
-                                    <FormField key={"email"} field={FieldsProperties["Email"]} onChange={onChange} value={value}/>
+                                    <>
+                                        <FormField key={"email"} field={FieldsProperties["Email"]} onChange={onChange} value={value}/>
+                                        <FormHelperText error>{errors["email"] ? 
+                                                                    errors["email"].message 
+                                                                    :  " "}</FormHelperText>
+                                    </>
                                 )}
                             />
                         </Grid>
@@ -59,12 +67,18 @@ const LoginForm = () => {
                             <Controller 
                                 control={control}
                                 name={"password"}
+                                rules={FieldsProperties["Password"].rules}
                                 render={({
                                     field: { onChange, onBlur, value, name, ref },
                                     fieldState: { invalid, isTouched, isDirty, error },
                                     formState,
                                 }) => (
-                                    <FormField key={"password"} field={FieldsProperties["Password"]} onChange={onChange} value={value}/>
+                                    <>
+                                        <FormField key={"password"} field={FieldsProperties["Password"]} onChange={onChange} value={value}/>
+                                        <FormHelperText error>{errors["password"] ? 
+                                                                    errors["password"].message 
+                                                                    :  " "}</FormHelperText>
+                                    </>
                                 )}
                             />
                         </Grid>

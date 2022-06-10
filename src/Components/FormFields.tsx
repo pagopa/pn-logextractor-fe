@@ -72,6 +72,10 @@ type FieldsProps = {
      * if the field is required
      */
     required?: boolean
+    /**
+     * size of the field in percents
+     */
+    size?: string
 }
 
 /**
@@ -120,12 +124,23 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                 required: errorMessages.REQUIRED
             },
             required: false
+    },  
+    "IUN": {
+            name: "iun",
+            componentType: "textfield",
+            label: "IUN",
+            hidden: false,
+            rules: {
+                required: errorMessages.REQUIRED
+            },
+            required: false
     },
     "Unique Identifier": {
             name: "personId",
             componentType: "textfield",
             label: "Codice Univoco",
             hidden: false,
+            size: "45%",
             rules: {
                 pattern: {
                     value: regex.UNIQUE_IDENTIFIER_PATTERN,
@@ -139,16 +154,6 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                     value: 100,
                     message: errorMessages.UNIQUES_IDENTIFIER_LENGTH
                 },
-                required: errorMessages.REQUIRED
-            },
-            required: false
-    },
-    "IUN": {
-            name: "iun",
-            componentType: "textfield",
-            label: "IUN",
-            hidden: false,
-            rules: {
                 required: errorMessages.REQUIRED
             },
             required: false
@@ -168,6 +173,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         componentType: "textfield",
         label: "Trace ID",
         hidden: false,
+        size: "45%",
         rules: {
                 required: errorMessages.REQUIRED
         },
@@ -259,9 +265,12 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         componentType: "textfield",
         label: "Email",
         hidden: false,
-        type: "email",
         rules: {
-            required: errorMessages.REQUIRED
+            required: errorMessages.INCORRECT_EMAIL,
+            pattern: {
+                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                message: errorMessages.INCORRECT_EMAIL
+            }
         },
     },
     "Password": {
@@ -271,7 +280,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
         hidden: false,
         type: "password",
         rules: {
-            required: errorMessages.REQUIRED
+            required: errorMessages.INCORRECT_PASSWORD,
+            pattern: {
+                    value: regex.PASSWORD,
+                    message: errorMessages.INCORRECT_PASSWORD
+                },
         },
     },
 }

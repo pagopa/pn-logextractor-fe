@@ -289,7 +289,7 @@ const SearchForm = () => {
                                     fields.map(field => {
                                         return (
                                             !field.hidden &&
-                                            <Grid item key={field.name + "Item"}>
+                                            <Grid item key={field.name + "Item"} width={field.size}>
                                                 <Controller
                                                 control={control}
                                                 name={field.name}
