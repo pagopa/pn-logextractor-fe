@@ -139,7 +139,9 @@ const SearchForm = () => {
             if(neededFields.includes(field.name) || field.name == "Tipo Estrazione"){
                 console.log(neededFields)
                 if(selectedValue === "Ottieni log completi" && 
-                    neededFields.sort().join("") === MenuItems["Ottieni log completi"].sort().join("")){
+                    neededFields.sort().join("") === MenuItems["Ottieni log completi"].sort().join("") &&
+                    field.name !== "ticketNumber"
+                    ){
                     return {...field, required: false}
                 }
                 return {...field, required: true}
