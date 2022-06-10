@@ -137,7 +137,9 @@ const SearchForm = () => {
         const allFields = Object.values(FieldsProperties);
         return allFields.map(field => {
             if(neededFields.includes(field.name) || field.name == "Tipo Estrazione"){
-                if(selectedValue === "Ottieni log completi" && neededFields.length > 4){
+                console.log(neededFields)
+                if(selectedValue === "Ottieni log completi" && 
+                    neededFields.sort().join("") === MenuItems["Ottieni log completi"].sort().join("")){
                     return {...field, required: false}
                 }
                 return {...field, required: true}
