@@ -4,6 +4,14 @@ import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 import { updateSnackbacrOpened, opened, statusCode } from "../redux/snackbarSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { infoMessages } from "../helpers/messagesConstants"
+import Slide, { SlideProps } from '@mui/material/Slide';
+
+type TransitionProps = Omit<SlideProps, 'direction'>;
+
+function TransitionUp(props: TransitionProps) {
+  return <Slide {...props} direction="up" />;
+}
+
 /** 
  * connecting severity with the type of alert
  * @enum 
@@ -24,16 +32,6 @@ const SeverityMessage: {[key: string]: string} = {
   "OK": infoMessages.OK_RESPONSE,
   "Bad Request": infoMessages.BAD_REQUEST_RESPONSE,
   "Internal Server Error": infoMessages.INTERNEL_SERVER_ERROR_RESPONSE,
-}
-
-/** 
- * Styles of the component 
-*/
-const styles = {
-  position: "static", 
-  transform: "none !important", 
-  "WebkitTransform": "none !important", 
-  paddingBottom: "20px" 
 }
 
 /**
@@ -78,9 +76,9 @@ const SnackbarComponent = () => {
 
     return(
         <Snackbar open={snackbarOpened}
-                autoHideDuration={3000}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                sx={styles}
+                autoHideDuration={2000}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                TransitionComponent={TransitionUp}
                 onClose={(e: Event | SyntheticEvent<any, Event>, r: SnackbarCloseReason) => handleClose(e, r)}
                 >
         <Alert onClose={handleClose}

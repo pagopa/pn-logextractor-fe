@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 enum ResponseType {
     password = "Password",
     taxId = "Codice Fiscale",
-    internalId = "ID"
+    internalId = "Codice Univoco"
 }
 
 /**

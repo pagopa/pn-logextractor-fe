@@ -27,13 +27,13 @@ const SearchPage = () => {
                 <CircularProgress color="inherit" />
             </Backdrop>
             <Grid item>
-                <SnackbarComponent />
-            </Grid>
-            <Grid item>
                 <SearchForm />
             </Grid>
             <Grid item>
                 <ResponseData />
+            </Grid>
+            <Grid item>
+                <SnackbarComponent />
             </Grid>
         </Grid>
   );
