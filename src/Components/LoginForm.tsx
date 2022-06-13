@@ -45,6 +45,7 @@ const LoginForm = () => {
             justifyContent="center"
             alignItems="center"
             minHeight="100vh"
+            sx={{backgroundColor: '#0066CC'}}
         >
             <Card elevation={24} sx={{ width: 1 / 2, padding: "5%", boxShadow: "0px 3px 3px -2px " }}>
                 <Grid container direction="column" rowSpacing={2}>
