@@ -5,6 +5,7 @@ import { updateSnackbacrOpened, opened, statusCode } from "../redux/snackbarSlic
 import { useDispatch, useSelector } from 'react-redux';
 import { infoMessages } from "../helpers/messagesConstants"
 import Slide, { SlideProps } from '@mui/material/Slide';
+import { Typography } from "@mui/material";
 
 type TransitionProps = Omit<SlideProps, 'direction'>;
 
@@ -84,7 +85,7 @@ const SnackbarComponent = () => {
         <Alert onClose={handleClose}
            variant="filled" severity={Severity[severity as keyof typeof Severity]}
         >
-          {SeverityMessage[severity]}
+          <Typography>{SeverityMessage[severity]}</Typography> 
         </Alert>
       </Snackbar>
     )

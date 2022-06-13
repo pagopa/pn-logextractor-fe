@@ -2,16 +2,17 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { infoMessages } from "../helpers/messagesConstants"
+import { Grid, Typography } from '@material-ui/core';
 
 /**
  * General component presenting the header of the app.
  */
 const Header = () => {
-  
+
   /**
   * the state of the confirmation modal
   */
@@ -40,28 +41,37 @@ const Header = () => {
     navigate("/");
   }
 
-  return(
-    <AppBar position="static">
-        <Toolbar style={{display:'flex', justifyContent:"right"}}>
-          <Tooltip title="Log out">
-            <IconButton 
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleOpenModal}
-            >
-              <LogoutIcon />
-            </IconButton>
-          </Tooltip>
-         </Toolbar>
-          <Dialog
-            open={open}
-            onClose={handleCloseModal}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
+  return (
+      <AppBar position="static">
+        <Toolbar>
+          <Grid container spacing={2} justifyContent="flex-end" alignItems="center">
+            <Grid item>
+              <Typography>test@test.com</Typography>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Log out">
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ mr: 2 }}
+                  onClick={handleOpenModal}
+                >
+                  <LogoutIcon sx={{ color: "white" }} />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        </Toolbar>
+
+
+        <Dialog
+          open={open}
+          onClose={handleCloseModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
           <DialogTitle id="alert-dialog-title">
             LOG OUT
           </DialogTitle>
@@ -77,7 +87,7 @@ const Header = () => {
             </Button>
           </DialogActions>
         </Dialog>
-      </AppBar>
+      </AppBar >
   )
 }
 
