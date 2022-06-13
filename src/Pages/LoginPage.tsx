@@ -6,13 +6,9 @@ const LoginPage = () => {
     return(
         <Grid container direction="column" justifyContent="center">
             <Grid item>
-                <SnackbarComponent />
-            </Grid>
-            <Grid item>
                 <LoginForm />
             </Grid>
         </Grid>
-        
     )
 }
 

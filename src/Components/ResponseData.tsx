@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Divider, Grid, Typography } from '@mui/material';
 import { opened, responseData } from "../redux/responseSlice";
 import { useSelector } from 'react-redux';
 
@@ -9,9 +9,9 @@ import { useSelector } from 'react-redux';
  * @type {string} 
  */
 enum ResponseType {
-    password = "Password",
-    taxId = "Codice Fiscale",
-    internalId = "Codice Univoco"
+  password = "Password",
+  taxId = "Codice Fiscale",
+  internalId = "Codice Univoco"
 }
 
 /**
@@ -27,13 +27,25 @@ const ResponseData = () => {
 
   return (
     openedResponseData ?
-      <Typography align="center">
-        <>
-          {ResponseType[Object.keys(response)[0] as keyof typeof ResponseType]} : {Object.values(response)[0]}
-        </>
-      </Typography>
+      <Grid item container direction="column" rowSpacing={3}>
+        <Grid item>
+          <Divider/>
+        </Grid>
+        <Grid item container>
+          <Typography variant='h6'>Dati di risposta:</Typography>
+        </Grid>
+        <Grid item container>
+          <Typography align="center">
+            <Box sx={{ fontWeight: 'bold' }}>
+              <>
+                {ResponseType[Object.keys(response)[0] as keyof typeof ResponseType]} : {Object.values(response)[0]}
+              </>
+            </Box>
+          </Typography>
+        </Grid>
+      </Grid>
       : null
-    )
+  )
 }
 
 export default ResponseData;

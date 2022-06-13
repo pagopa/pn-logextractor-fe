@@ -29,12 +29,6 @@ const SearchPage = () => {
             <Grid item>
                 <SearchForm />
             </Grid>
-            <Grid item>
-                <ResponseData />
-            </Grid>
-            <Grid item>
-                <SnackbarComponent />
-            </Grid>
         </Grid>
   );
 }
