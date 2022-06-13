@@ -36,11 +36,9 @@ const ResponseData = () => {
         </Grid>
         <Grid item container>
           <Typography align="center">
-            <Box sx={{ fontWeight: 'bold' }}>
               <>
                 {ResponseType[Object.keys(response)[0] as keyof typeof ResponseType]} : {Object.values(response)[0]}
               </>
-            </Box>
           </Typography>
         </Grid>
       </Grid>
