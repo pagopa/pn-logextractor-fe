@@ -78,6 +78,7 @@ const SnackbarComponent = () => {
     return(
         <Snackbar open={snackbarOpened}
                 autoHideDuration={2000}
+                sx={{'@media (min-width: 640px)': { bottom: "82px", }}}
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 TransitionComponent={TransitionUp}
                 onClose={(e: Event | SyntheticEvent<any, Event>, r: SnackbarCloseReason) => handleClose(e, r)}
