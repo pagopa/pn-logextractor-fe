@@ -299,60 +299,68 @@ const SearchForm = () => {
                 </Grid>
                 <Grid item container rowSpacing={2}>
                     <Card elevation={24} sx={{ width: 1, padding: "5%", boxShadow: "0px 3px 3px -2px " }}>
-                        <form onSubmit={handleSubmit(data => onSubmit(data))}>
-                            <Grid container item direction="column">
-                                <Grid item container spacing={2} alignItems="center">
-                                    {
-                                        fields.map(field => {
-                                            return (
-                                                !field.hidden &&
-                                                <Grid item key={field.name + "Item"} width={field.size}>
-                                                    <Controller
-                                                        control={control}
-                                                        name={field.name}
-                                                        rules={field.rules}
-                                                        render={({
-                                                            field: { onChange, onBlur, value, name, ref },
-                                                            fieldState: { invalid, isTouched, isDirty, error },
-                                                            formState,
-                                                        }) => {
-                                                            return (
-                                                                <>
-                                                                    <FormField field={field} value={value} onBlur={onBlur} error={error}
-                                                                        onChange={(value: any) => {
-                                                                            onChange(value)
-                                                                            value.nativeEvent && value.nativeEvent.data === null && clearErrors(name)
-                                                                        }}
-                                                                    />
-                                                                    <FormHelperText error>{errors[field.name] ?
-                                                                        errors[field.name].message
-                                                                        : " "}</FormHelperText>
-                                                                </>
+                        <Grid container  rowSpacing={2}>
+                            <Grid item>
+                                <form onSubmit={handleSubmit(data => onSubmit(data))}>
+                                    <Grid container item direction="column">
+                                        <Grid item container spacing={2} alignItems="center">
+                                            {
+                                                fields.map(field => {
+                                                    return (
+                                                        !field.hidden &&
+                                                        <Grid item key={field.name + "Item"} width={field.size}>
+                                                            <Controller
+                                                                control={control}
+                                                                name={field.name}
+                                                                rules={field.rules}
+                                                                render={({
+                                                                    field: { onChange, onBlur, value, name, ref },
+                                                                    fieldState: { invalid, isTouched, isDirty, error },
+                                                                    formState,
+                                                                }) => {
+                                                                    return (
+                                                                        <>
+                                                                            <FormField field={field} value={value} onBlur={onBlur} error={error}
+                                                                                onChange={(value: any) => {
+                                                                                    onChange(value)
+                                                                                    value.nativeEvent && value.nativeEvent.data === null && clearErrors(name)
+                                                                                }}
+                                                                            />
+                                                                            <FormHelperText error>{errors[field.name] ?
+                                                                                errors[field.name].message
+                                                                                : " "}</FormHelperText>
+                                                                        </>
 
-                                                            )
-                                                        }}
-                                                    />
-                                                </Grid>
+                                                                    )
+                                                                }}
+                                                            />
+                                                        </Grid>
 
-                                            )
-                                        })
-                                    }
-                                </Grid>
-                                <Grid item container direction="row" justifyContent="space-between">
-                                    <Grid item >
-                                        <Button size="large" variant="outlined" sx={{top: "-2px"}} startIcon={<RestartAltIcon />}
-                                        onClick={() => reset({...defaultFormValues, "Tipo Estrazione": getValues("Tipo Estrazione")})}
-                                        >Resetta filtri</Button>                       
+                                                    )
+                                                })
+                                            }
+                                        </Grid>
+                                        <Grid item container direction="row" justifyContent="space-between">
+                                            <Grid item >
+                                                <Button size="large" variant="outlined" sx={{top: "-2px"}} startIcon={<RestartAltIcon />}
+                                                onClick={() => reset({...defaultFormValues, "Tipo Estrazione": getValues("Tipo Estrazione")})}
+                                                >Resetta filtri</Button>                       
+                                            </Grid>
+                                            <Grid item >
+                                                <Button size="large" type="submit" variant="contained" sx={{top: "-2px"}} startIcon={<SearchIcon />}
+                                                        disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
+                                                >Ricerca</Button>                       
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item >
-                                        <Button size="large" type="submit" variant="contained" sx={{top: "-2px"}} startIcon={<SearchIcon />}
-                                                disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
-                                        >Ricerca</Button>                       
-                                    </Grid>
-                                </Grid>
+                                </form>
                             </Grid>
-                        </form>
-                        <ResponseData></ResponseData>
+                            <Grid item xs={12}>
+                                 <ResponseData></ResponseData>
+                            </Grid>
+                        </Grid>
+                        
+                       
                     </Card>
                 </Grid>
             </Grid>
