@@ -9,7 +9,7 @@ import {Grid, Typography } from '@material-ui/core';
 const Footer = () => {
 
   return (
-    <AppBar position="absolute" sx={{bgcolor: "#001a33", bottom: 0, top: "auto"}} >
+    <AppBar position="absolute" sx={{bgcolor: "#001a33", bottom: 0, top: "auto", '@media (max-height: 620px)':{position:"relative"}}} >
       <Container>
         <Toolbar sx={{paddingRight:"0px", '@media (min-width: 640px)':{paddingRight:"0px"}}}>
             <Grid container justifyContent="flex-start" alignItems="center" spacing={2}>
