@@ -55,7 +55,7 @@ const Header = () => {
               <Grid container justifyContent='flex-end' alignItems="center">
                 <AccountCircleIcon />
                 <Typography>test@test.com</Typography>
-                <Divider style={{ background: 'white' }} orientation="vertical" variant="middle" flexItem />
+                <Divider style={{ background: 'white' }}  orientation="vertical" variant="middle" flexItem />
                 <Tooltip title="Log out">
                   <IconButton
                     size="large"
