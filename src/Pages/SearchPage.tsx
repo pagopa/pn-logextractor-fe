@@ -1,11 +1,10 @@
 import Header from '../Components/Header';
-import SnackbarComponent from '../Components/SnackbarComponent';
-import ResponseData from '../Components/ResponseData';
 import SearchForm from '../Components/SearchForm';
 import { Backdrop, Grid } from '@mui/material';
 import { opened } from "../redux/spinnerSlice";
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
+import Footer from '../Components/Footer';
 
 /**
  * Component containing all objects of the app representing the whole page 
@@ -28,6 +27,9 @@ const SearchPage = () => {
             </Backdrop>
             <Grid item>
                 <SearchForm />
+            </Grid>
+            <Grid item>
+                <Footer />
             </Grid>
         </Grid>
   );
