@@ -318,7 +318,7 @@ const SearchForm = () => {
                                                         }) => {
                                                             return (
                                                                 <>
-                                                                    <FormField field={field} value={value} onBlur={onBlur}
+                                                                    <FormField field={field} value={value} onBlur={onBlur} error={error}
                                                                         onChange={(value: any) => {
                                                                             onChange(value)
                                                                             value.nativeEvent && value.nativeEvent.data === null && clearErrors(name)

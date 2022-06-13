@@ -20,7 +20,11 @@ type Props = {
   /**
    * function for handling blur of this textfield
    */
-  onBlur: any
+  onBlur: any,
+  /**
+   * if there is an error for that field
+   */
+  error?: any
 }
 
 /**
@@ -41,6 +45,7 @@ const TextFieldComponent = (props: Props) => {
             id={field.label} 
             label={field.label}
             variant="outlined"
+            error={props.error ? true : false}
             onBlur={
               props.value && props.value.length ?
               props.onBlur
