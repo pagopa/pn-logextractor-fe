@@ -15,7 +15,7 @@ const SearchPage = () => {
   const openedSpinner = useSelector(opened);
 
   return (
-        <Grid container direction="column" justifyItems="start" justifyContent="space-around" rowSpacing={5} wrap="nowrap">
+        <Grid container direction="column" justifyItems="start" justifyContent="space-around" rowSpacing={3} wrap="nowrap">
             <Grid item>
                 <Header />
             </Grid>

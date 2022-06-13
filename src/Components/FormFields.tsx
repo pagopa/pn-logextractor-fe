@@ -312,7 +312,7 @@ type Props = {
  */
 const FormField = ({ field, onChange, value, onBlur, error }: Props) => { 
     const componentType : string = field.componentType;
-    return <Grid item container>
+    return <Grid item>
         {
             componentType == "textfield" && 
                 <TextFieldComponent error={error} value={value} onChange={onChange} field={field}  onBlur={onBlur}/>

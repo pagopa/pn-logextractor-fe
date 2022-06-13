@@ -9,8 +9,8 @@ import { Typography } from "@mui/material";
 
 type TransitionProps = Omit<SlideProps, 'direction'>;
 
-function TransitionUp(props: TransitionProps) {
-  return <Slide {...props} direction="up" />;
+function TransitionDown(props: TransitionProps) {
+  return <Slide {...props} direction="down" />;
 }
 
 /** 
@@ -78,9 +78,10 @@ const SnackbarComponent = () => {
     return(
         <Snackbar open={snackbarOpened}
                 autoHideDuration={2000}
-                sx={{'@media (min-width: 640px)': { bottom: "82px", }}}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                TransitionComponent={TransitionUp}
+                
+                sx={{'@media (min-width: 630px)': { top: "65px"}}}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                TransitionComponent={TransitionDown}
                 onClose={(e: Event | SyntheticEvent<any, Event>, r: SnackbarCloseReason) => handleClose(e, r)}
                 >
         <Alert onClose={handleClose}

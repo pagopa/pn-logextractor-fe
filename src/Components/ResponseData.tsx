@@ -27,7 +27,7 @@ const ResponseData = () => {
 
   return (
     openedResponseData ?
-      <Grid item container direction="column" rowSpacing={3}>
+      <Grid item container direction="column" rowSpacing={2}>
         <Grid item>
           <Divider/>
         </Grid>
