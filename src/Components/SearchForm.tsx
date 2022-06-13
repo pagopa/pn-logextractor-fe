@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { base64StringToBlob } from "blob-util";
 import SearchIcon from '@mui/icons-material/Search';
 import ResponseData from "./ResponseData";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+
 /**
  * default values of the form fields
  */
@@ -336,11 +338,16 @@ const SearchForm = () => {
                                         })
                                     }
                                 </Grid>
-                                <Grid item container direction="row" justifyContent="center">
-                                    <Grid item>
-                                        <Button size="large" type="submit" variant="outlined" sx={{ top: "-2px" }} endIcon={<SearchIcon />}
-                                            disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1}
-                                        >Ricerca</Button>
+                                <Grid item container direction="row" justifyContent="space-between">
+                                    <Grid item >
+                                        <Button size="large" variant="outlined" sx={{top: "-2px"}} endIcon={<RestartAltIcon />}
+                                        onClick={() => reset({...defaultFormValues, "Tipo Estrazione": getValues("Tipo Estrazione")})}
+                                        >Resetta filtri</Button>                       
+                                    </Grid>
+                                    <Grid item >
+                                        <Button size="large" type="submit" variant="outlined" sx={{top: "-2px"}} endIcon={<SearchIcon />}
+                                                disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
+                                        >Ricerca</Button>                       
                                     </Grid>
                                 </Grid>
                             </Grid>
