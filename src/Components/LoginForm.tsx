@@ -59,7 +59,7 @@ const LoginForm = () => {
                                     formState,
                                 }) => (
                                     <>
-                                        <FormField key={"email"} field={FieldsProperties["Email"]} onChange={onChange} value={value}/>
+                                        <FormField error={error} key={"email"} field={FieldsProperties["Email"]} onChange={onChange} value={value}/>
                                         <FormHelperText error>{errors["email"] ? 
                                                                     errors["email"].message 
                                                                     :  " "}</FormHelperText>
@@ -78,7 +78,7 @@ const LoginForm = () => {
                                     formState,
                                 }) => (
                                     <>
-                                        <FormField key={"password"} field={FieldsProperties["Password"]} onChange={onChange} value={value}/>
+                                        <FormField error={error} key={"password"} field={FieldsProperties["Password"]} onChange={onChange} value={value}/>
                                         <FormHelperText error>{errors["password"] ? 
                                                                     errors["password"].message 
                                                                     :  " "}</FormHelperText>
