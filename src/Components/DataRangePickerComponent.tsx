@@ -45,6 +45,10 @@ type Props = {
      * if the field is required
      */
     required: boolean
+    /**
+     * function handling onBlur event used for onCLose of the date picker
+     */
+    onBlur: any
 }
 
 /**
@@ -89,6 +93,7 @@ const DateRangePickerComponent = (props: Props) => {
                     label={dates[0].label}
                     value={dates[0].value}
                     onChange={e => handleChange(e, "start")}
+                    onClose={props.onBlur}
                     disableFuture
                     inputFormat="yyyy-MM-dd"
                     mask={"____-__-__"} 
@@ -104,6 +109,7 @@ const DateRangePickerComponent = (props: Props) => {
                 label={dates[1].label}
                 value={dates[1].value}
                 onChange={e => handleChange(e, "end")}
+                onClose={props.onBlur}
                 inputFormat="yyyy-MM-dd"
                 mask={"____-__-__"} 
                 disableFuture

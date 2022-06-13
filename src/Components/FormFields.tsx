@@ -75,7 +75,11 @@ type FieldsProps = {
     /**
      * size of the field in percents
      */
-    size?: string
+    size?: string,
+    /**
+     * some additional input props for text fields
+     */
+    inputProps?: {}
 }
 
 /**
@@ -108,6 +112,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             componentType: "textfield",
             label: "Codice Fiscale",
             hidden: false,
+            inputProps: { maxLength: 16 },
             rules: {
                 pattern: {
                     value: regex.FISCAL_CODE_PATTERN,
@@ -115,11 +120,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                 },
                 minLength: {
                     value: 16,
-                    message: errorMessages.FISCAL_CODE_LENGTH
+                    message: errorMessages.INCORRECT
                 },
                 maxLength: {
                     value: 16,
-                    message: errorMessages.FISCAL_CODE_LENGTH
+                    message: errorMessages.INCORRECT
                 },
                 required: errorMessages.REQUIRED
             },
@@ -329,7 +334,7 @@ const FormField = ({ field, onChange, value, onBlur }: Props) => {
         }
         {
             componentType == "dateRangePicker" &&
-                <DateRangePickerComponent required={field.required!} onChange={onChange} intervalLimit={[3, "months"]}  datePickers={[
+                <DateRangePickerComponent onBlur={onBlur} required={field.required!} onChange={onChange} intervalLimit={[3, "months"]}  datePickers={[
                     {
                         label: "Dal",
                         view:["day"],

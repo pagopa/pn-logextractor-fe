@@ -105,11 +105,13 @@ const SearchForm = () => {
             return;
         }
         if(selectedValue === "Ottieni log completi" ){
-            if(Object.keys(dirtyFields).length == 0 || (Object.keys(dirtyFields).length == 1 && 
-                ["deanonimization", "ticketNumber", "Time interval"].includes( Object.keys(dirtyFields)[0]))){
+            const common = Object.keys(dirtyFields).filter(
+                field => ["deanonimization", "ticketNumber", "Time interval", "recipientType"].includes(field));
+            if(Object.keys(dirtyFields).length === common.length){
                 neededFields = MenuItems["Ottieni log completi"].filter(item => item != "deanonimization");
                 clearErrors();
-            }else{
+            }
+            else{
                 if(Object.keys(dirtyFields).includes("taxId")){
                     neededFields = ["ticketNumber", "taxId", "Time interval", "recipientType"];
                 }
@@ -137,7 +139,6 @@ const SearchForm = () => {
         const allFields = Object.values(FieldsProperties);
         return allFields.map(field => {
             if(neededFields.includes(field.name) || field.name == "Tipo Estrazione"){
-                console.log(neededFields)
                 if(selectedValue === "Ottieni log completi" && 
                     neededFields.sort().join("") === MenuItems["Ottieni log completi"].sort().join("") &&
                     field.name !== "ticketNumber"

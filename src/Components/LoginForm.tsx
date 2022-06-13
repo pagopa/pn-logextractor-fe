@@ -1,4 +1,5 @@
-import { Grid, Button, Box, FormLabel, Card, FormHelperText } from "@mui/material";
+import { Grid, Button, Box, FormLabel, Card, FormHelperText, Link, Tooltip, ClickAwayListener } from "@mui/material";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FieldsProperties, FormField } from "./FormFields";
@@ -16,6 +17,9 @@ const defaultFormValues: {[key: string]: string} = {
  * @component
  */
 const LoginForm = () => {
+
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+
     const { handleSubmit, control, watch, formState: { errors, isDirty, touchedFields, dirtyFields }, reset, getValues,  } = useForm({
         defaultValues: defaultFormValues,
         mode: 'onSubmit',
@@ -63,7 +67,7 @@ const LoginForm = () => {
                                 )}
                             />
                         </Grid>
-                        <Grid item>
+                        <Grid item sx={{textAlign: "justify"}}>
                             <Controller 
                                 control={control}
                                 name={"password"}
@@ -81,6 +85,14 @@ const LoginForm = () => {
                                     </>
                                 )}
                             />
+                            <Tooltip
+                                onClose={() => setTooltipOpen(false)}
+                                open={tooltipOpen}
+                                placement="bottom"
+                                title="In caso di smarrimento della password contattare l'amministratore di sistema per richiedere il reset"
+                            >
+                                <Link sx={{cursor: "pointer"}} onClick={() => setTooltipOpen(true)}>Password dimenticata?</Link>
+                            </Tooltip>
                         </Grid>
                         <Grid item>
                             <Button fullWidth size="large" type="submit" variant="outlined">Login</Button>                       
