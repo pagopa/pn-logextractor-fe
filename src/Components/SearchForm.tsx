@@ -340,12 +340,12 @@ const SearchForm = () => {
                                 </Grid>
                                 <Grid item container direction="row" justifyContent="space-between">
                                     <Grid item >
-                                        <Button size="large" variant="outlined" sx={{top: "-2px"}} endIcon={<RestartAltIcon />}
+                                        <Button size="large" variant="outlined" sx={{top: "-2px"}} startIcon={<RestartAltIcon />}
                                         onClick={() => reset({...defaultFormValues, "Tipo Estrazione": getValues("Tipo Estrazione")})}
                                         >Resetta filtri</Button>                       
                                     </Grid>
                                     <Grid item >
-                                        <Button size="large" type="submit" variant="outlined" sx={{top: "-2px"}} endIcon={<SearchIcon />}
+                                        <Button size="large" type="submit" variant="contained" sx={{top: "-2px"}} startIcon={<SearchIcon />}
                                                 disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
                                         >Ricerca</Button>                       
                                     </Grid>

@@ -4,7 +4,7 @@ export const errorMessages = {
     DATES_ORDER: "La data di inizio periodo non può essere oltre la data di fine periodo",
     FISCAL_CODE_LENGTH: "Il codice fiscale deve essere di 16 caratteri",
     UNIQUES_IDENTIFIER_LENGTH: "Il codice univoco deve avere tra 1 e 100 caratteri",
-    INCORRECT: "Inserimento errato!",
+    INCORRECT: "Inserimento errato",
     INCORRECT_PASSWORD: "Password non corretta",
     INCORRECT_EMAIL: "Email non corretta"
 }
