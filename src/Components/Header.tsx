@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { infoMessages } from "../helpers/messagesConstants"
 import { Divider, Grid, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import logo_pagopa_bianco from "../resources/logo_pagopa_bianco.svg";
 
 /**
  * General component presenting the header of the app.
@@ -45,22 +46,30 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Container>
-        <Toolbar sx={{paddingRight:"0px", '@media (min-width: 640px)':{paddingRight:"0px"}}}>
-          <Grid container justifyContent="flex-end" alignItems="center">
-            <AccountCircleIcon />
-            <Typography>test@test.com</Typography>
-            <Divider style={{ background: 'white' }} orientation="vertical" variant="middle" flexItem />
-            <Tooltip title="Log out">
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                onClick={handleOpenModal}
-              >
-                <LogoutIcon sx={{ color: "white" }} />
-              </IconButton>
-            </Tooltip>
+        <Toolbar sx={{ paddingRight: "0px", paddingLeft: "0px", '@media (min-width: 640px)': { paddingRight: "0px", paddingLeft: "0px" } }}>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              <Typography>PagoPA S.p.A.</Typography>
+            </Grid>
+            <Grid item>
+              <Grid container justifyContent='flex-end' alignItems="center">
+                <AccountCircleIcon />
+                <Typography>test@test.com</Typography>
+                <Divider style={{ background: 'white' }} orientation="vertical" variant="middle" flexItem />
+                <Tooltip title="Log out">
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleOpenModal}
+                  >
+                    <LogoutIcon sx={{ color: "white" }} />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+
+            </Grid>
           </Grid>
         </Toolbar>
       </Container>
