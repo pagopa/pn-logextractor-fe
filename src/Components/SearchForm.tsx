@@ -302,7 +302,7 @@ const SearchForm = () => {
                         <Grid container  rowSpacing={2}>
                             <Grid item>
                                 <form onSubmit={handleSubmit(data => onSubmit(data))}>
-                                    <Grid container item direction="column">
+                                    <Grid container item direction="row">
                                         <Grid item container spacing={2} alignItems="center">
                                             {
                                                 fields.map(field => {
