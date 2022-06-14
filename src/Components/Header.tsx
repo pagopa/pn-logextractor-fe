@@ -44,7 +44,7 @@ const Header = () => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{bgcolor:"#0066CC"}}>
       <Container>
         <Toolbar sx={{ paddingRight: "0px", paddingLeft: "0px", '@media (min-width: 640px)': { paddingRight: "0px", paddingLeft: "0px" } }}>
           <Grid container justifyContent="space-between" alignItems="center">
