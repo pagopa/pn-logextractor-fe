@@ -219,7 +219,7 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                     checkDates: (dates: Array<any>) => {
                         let startDate = moment(dates[0]);
                         let endDate = moment(dates[1]);
-                        return startDate.isBefore(endDate) || errorMessages.DATES_ORDER
+                        return startDate.isBefore(endDate) || startDate.isSame(endDate) || errorMessages.DATES_ORDER
                     }
                 }
             }
