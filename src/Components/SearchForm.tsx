@@ -49,12 +49,17 @@ const SearchForm = () => {
     /**
      * the fields coresponding to the selected value
      */
-    const [fields, setFields] = useState<FieldsProps[]>(Object.values(FieldsProperties));
+    const [fields, setFields] = useState<FieldsProps[]>([]);
 
     /**
      * helps for watching the touched field and handle changes of them in the Otteni log completi case
      */
     const [prevDirtyFields, setPrevDirtyFields] = useState<string[]>([])
+
+    /**
+     * helps for watching the touched field and handle changes of them in the Otteni log completi case
+     */
+    const [ricerca, setRicerca] = useState<boolean>(false)
 
     const dispatch = useDispatch();
 
@@ -95,6 +100,8 @@ const SearchForm = () => {
     }, [selectedValue])
 
     useLayoutEffect(() => () => {
+        setFields(filterFields(MenuItems[selectedValue]));
+        disableRicerca();
         resetStore();
     }, [])
 
@@ -106,6 +113,7 @@ const SearchForm = () => {
      */
     useEffect(() => {
         let neededFields: string[] = []
+        disableRicerca();
         if (Object.keys(dirtyFields).sort().join("") === prevDirtyFields.sort().join("")) {
             return;
         }
@@ -289,6 +297,24 @@ const SearchForm = () => {
         fileLink.click();
     }
 
+    /**
+     * check if every necessaty field is filled 
+     * @returns true | false 
+     */
+    const disableRicerca = () => {
+        const necessaryFields = fields.filter(field => !field.hidden).map(field => field.name)
+        const currentValues: any = Object.fromEntries(Object.entries(getValues())
+                .filter(([key]) => necessaryFields.includes(key) && key != "deanonimization"))
+        // if(Object.keys(errors).length > 0 || Object.keys(currentValues).length < 0){
+        //     setRicerca(true);
+        // }else 
+        if(Object.entries(currentValues).some(([key, value]) => value == "" || value == null)){
+            setRicerca(true);
+        }else{
+            setRicerca(false);
+        }
+    }
+
     return (
         <Container>
             <Grid container direction="column" rowSpacing={3}>
@@ -348,7 +374,7 @@ const SearchForm = () => {
                                             </Grid>
                                             <Grid item >
                                                 <Button size="large" type="submit" variant="contained" sx={{ background: "#0066CC", '&:hover': { background: "#0059B3" } }} startIcon={<SearchIcon />}
-                                                        disabled={Object.keys(errors).length > 0 || Object.keys(dirtyFields).length < 1} 
+                                                        disabled={Object.keys(errors).length > 0 || ricerca} 
                                                 >Ricerca</Button>                       
                                             </Grid>
                                         </Grid>

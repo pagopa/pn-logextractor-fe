@@ -22,6 +22,10 @@ type Props = {
   * function handling the change of the field 
   */
   onChange: any,
+  /**
+  * function handling onBlur event used for onCLose of the date picker
+  */
+  onBlur: any
 }
 
 /**
@@ -50,9 +54,10 @@ const DatePickerComponent = (props: Props) => {
           value={props.value}
           onChange={e => handleChange(e)}
           disableFuture
+          onClose={props.onBlur}
           inputFormat={field.format}
           mask={"____-__-__"} 
-          renderInput={(params) => <TextField {...params} required={field.required} />}
+          renderInput={(params) => <TextField {...params} onBlur={props.onBlur} required={field.required} />}
         />
     </LocalizationProvider>
     )

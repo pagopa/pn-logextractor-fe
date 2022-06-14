@@ -195,6 +195,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
                     value: true,
                     message: errorMessages.INCORRECT
                 },
+            validate: {
+                required: (value: string) => {
+                    return value !== "Invalid date" || errorMessages.REQUIRED
+                }
+            }    
             },
             view: ["month", "year"],
             type: "month",
@@ -331,7 +336,7 @@ const FormField = ({ field, onChange, value, onBlur, error }: Props) => {
         }
         {
             componentType == "datePicker" &&
-                <DatePickerComponent field={field} onChange={onChange} value={value}/>
+                <DatePickerComponent onBlur={onBlur} field={field} onChange={onChange} value={value}/>
         }
         {
             componentType == "dateRangePicker" &&

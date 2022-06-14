@@ -97,7 +97,7 @@ const DateRangePickerComponent = (props: Props) => {
                     disableFuture
                     inputFormat="yyyy-MM-dd"
                     mask={"____-__-__"} 
-                    renderInput={(params) => <TextField {...params} required={props.required} />}
+                    renderInput={(params) => <TextField {...params} onBlur={props.onBlur} required={props.required} />}
                     />
                 </LocalizationProvider>
             </Grid>
@@ -113,7 +113,7 @@ const DateRangePickerComponent = (props: Props) => {
                 inputFormat="yyyy-MM-dd"
                 mask={"____-__-__"} 
                 disableFuture
-                renderInput={(params) => <TextField {...params} required={props.required} />}
+                renderInput={(params) => <TextField {...params} onBlur={props.onBlur} required={props.required} />}
                 />
             </LocalizationProvider>
            </Grid>  
