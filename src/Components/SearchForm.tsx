@@ -208,6 +208,10 @@ const SearchForm = () => {
             payload.dateTo = payload["Time interval"][1];
             delete payload["Time interval"]
         }
+        // use case 3
+        if(selectedValue === "Ottieni log completi" && payload.hasOwnProperty("taxId")){
+            payload.deanonimization = true
+        }
         return payload;
     }
 
