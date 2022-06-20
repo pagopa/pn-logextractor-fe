@@ -1,20 +1,20 @@
 import { Box, Button, Card, Container, FormHelperText, Grid, Typography } from "@mui/material";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import { FieldsProperties, FieldsProps, FormField, MenuItems } from "./FormFields";
+import { FieldsProperties, FieldsProps, FormField, MenuItems } from "../FormFields";
 import moment from 'moment';
-import apiRequests from "../api/apiRequests";
+import apiRequests from "../../api/apiRequests";
 import {
     getLogsProcessesType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType,
     getPersonBasicDataType, getPersonsLogsType
-} from "../api/apiRequestTypes";
-import * as snackbarActions from "../redux/snackbarSlice";
-import * as responseActions from "../redux/responseSlice";
-import * as spinnerActions from "../redux/spinnerSlice";
+} from "../../api/apiRequestTypes";
+import * as snackbarActions from "../../redux/snackbarSlice";
+import * as responseActions from "../../redux/responseSlice";
+import * as spinnerActions from "../../redux/spinnerSlice";
 import { useDispatch } from 'react-redux';
 import { base64StringToBlob } from "blob-util";
 import SearchIcon from '@mui/icons-material/Search';
-import ResponseData from "./ResponseData";
+import ResponseData from "../ResponseData";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 /**
@@ -61,6 +61,9 @@ const SearchForm = () => {
      */
     const [ricerca, setRicerca] = useState<boolean>(false)
 
+    /**
+     * dispatch redux actions
+     */
     const dispatch = useDispatch();
 
     /**
@@ -309,9 +312,6 @@ const SearchForm = () => {
         const necessaryFields = fields.filter(field => !field.hidden).map(field => field.name)
         const currentValues: any = Object.fromEntries(Object.entries(getValues())
                 .filter(([key]) => necessaryFields.includes(key) && key != "deanonimization"))
-        // if(Object.keys(errors).length > 0 || Object.keys(currentValues).length < 0){
-        //     setRicerca(true);
-        // }else 
         if(Object.entries(currentValues).some(([key, value]) => value == "" || value == null)){
             setRicerca(true);
         }else{

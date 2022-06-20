@@ -9,6 +9,8 @@ import { infoMessages } from "../helpers/messagesConstants"
 import { Divider, Grid, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import logo_pagopa_bianco from "../resources/logo_pagopa_bianco.svg";
+import {logout} from "../Authentication/auth"
+import { resetStorage } from '../Authentication/storage';
 
 /**
  * General component presenting the header of the app.
@@ -40,7 +42,14 @@ const Header = () => {
   * Function handling the logging out
   */
   const handleLogOut = () => {
-    navigate("/");
+    logout()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error: any) => {
+        throw error;
+      })
+    
   }
 
   return (

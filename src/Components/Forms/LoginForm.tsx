@@ -2,9 +2,12 @@ import { Grid, Button, Box, Card, FormHelperText, Link, Tooltip, Typography } fr
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { FieldsProperties, FormField } from "./FormFields";
+import { FieldsProperties, FormField } from "../FormFields";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import logo_pagopa_azzurro from "../resources/logo_pagopa_azzurro.svg";
+import logo_pagopa_azzurro from "../../resources/logo_pagopa_azzurro.svg";
+import {login} from "../../Authentication/auth"
+import * as snackbarActions from "../../redux/snackbarSlice";
+import { useDispatch } from 'react-redux';
 
 /**
  * default values of the form fields
@@ -18,25 +21,50 @@ const defaultFormValues: { [key: string]: string } = {
  * Generating the login form using the form fields
  * @component
  */
-const LoginForm = () => {
+const LoginForm = ({ setUser }: any) => {
 
+    /**
+     * dispatch redux actions
+     */
+    const dispatch = useDispatch();
+
+    /**
+     * tooltip about forgot password
+     */
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
+     /**
+     * form functionalities from react-hook-forms
+     */
     const { handleSubmit, control, watch, formState: { errors, isDirty, touchedFields, dirtyFields }, reset, getValues, } = useForm({
         defaultValues: defaultFormValues,
         mode: 'onSubmit',
         reValidateMode: 'onSubmit'
     });
 
+    /**
+     * for navigate to other pages 
+     */
     const navigate = useNavigate();
+    
 
     /**
      * function handling the form submitting
      * @param data the data from the form
      */
-    const onSubmit = (data: { [x: string]: string; }) => {
-        console.log(data);
-        navigate("/search");
+    const onSubmit = async (data: { [x: string]: string; }) => {
+        await login({email: data.email, password: data.password})
+            .then((user: {[key:string]: any}) => {
+                if(user.challengeName === "NEW_PASSWORD_REQUIRED"){
+                    setUser(user)
+                }else{
+                    navigate("/search");
+                }
+            })
+            .catch((error: any) => {
+                dispatch(snackbarActions.updateSnackbacrOpened(true))
+                dispatch(snackbarActions.updateStatusCode("400"))
+            })
     }
 
     return (

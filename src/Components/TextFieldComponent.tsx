@@ -38,6 +38,7 @@ const TextFieldComponent = (props: Props) => {
          <TextField 
             required={field.required}
             inputProps={field.inputProps ? field.inputProps : {}}
+            InputProps={field.InputProps ? field.InputProps : {}}
             fullWidth
             type={field.type}
             hidden={field.hidden!}

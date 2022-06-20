@@ -1,5 +1,5 @@
 import Header from '../Components/Header';
-import SearchForm from '../Components/SearchForm';
+import SearchForm from '../Components/Forms/SearchForm';
 import { Backdrop, Grid } from '@mui/material';
 import { opened } from "../redux/spinnerSlice";
 import { useSelector } from 'react-redux';

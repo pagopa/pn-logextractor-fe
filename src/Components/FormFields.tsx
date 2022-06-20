@@ -1,6 +1,6 @@
 import TextFieldComponent from "./TextFieldComponent"
 import RadioButtonsGroup from "./RadioButtonsGroup";
-import { Checkbox, FormControlLabel, Grid} from "@mui/material";
+import { Checkbox, FormControlLabel, Grid, InputAdornment} from "@mui/material";
 import SelectField from "./SelectField";
 import { regex } from "../helpers/validations";
 import DatePickerComponent from "./DatePickerComponent";
@@ -80,6 +80,10 @@ type FieldsProps = {
      * some additional input props for text fields
      */
     inputProps?: {}
+    /**
+     * some additional input props for text fields
+     */
+    InputProps?: {}
 }
 
 /**
