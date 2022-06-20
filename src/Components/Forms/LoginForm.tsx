@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FieldsProperties, FormField } from "../FormFields";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import logo_pagopa_azzurro from "../../resources/logo_pagopa_azzurro.svg";
+import logo from "../../resources/logo.svg";
 import {login} from "../../Authentication/auth"
 import * as snackbarActions from "../../redux/snackbarSlice";
 import { useDispatch } from 'react-redux';
@@ -83,7 +83,7 @@ const LoginForm = ({ setUser }: any) => {
                     <Grid item container alignItems="center" justifyContent="center">
                         <Box component="img" sx={{ height: "15%", width: "15%", paddingBottom:"2%"}}
                             alt="logo"
-                            src={logo_pagopa_azzurro}
+                            src={logo}
                         />
                     </Grid>
                     <form onSubmit={handleSubmit(data => onSubmit(data))}>
