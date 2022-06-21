@@ -52,6 +52,7 @@ const ChangePasswordForm = ({ user }: any) => {
      */
     const onSubmit = async (data: { [x: string]: string; }) => {
         await changePassword(user, data.newPassword).then(res => {
+            console.log(res)
             navigate("/search");
         })
         .catch((error: any) => {

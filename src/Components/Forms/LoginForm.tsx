@@ -21,7 +21,7 @@ const defaultFormValues: { [key: string]: string } = {
  * Generating the login form using the form fields
  * @component
  */
-const LoginForm = ({ setUser }: any) => {
+const LoginForm = ({ setUser, setEmail }: any) => {
 
     /**
      * dispatch redux actions
@@ -53,11 +53,13 @@ const LoginForm = ({ setUser }: any) => {
      * @param data the data from the form
      */
     const onSubmit = async (data: { [x: string]: string; }) => {
+        setEmail(data.email)
         await login({email: data.email, password: data.password})
             .then((user: {[key:string]: any}) => {
                 if(user.challengeName === "NEW_PASSWORD_REQUIRED"){
                     setUser(user)
                 }else{
+                    console.log(user)
                     navigate("/search");
                 }
             })

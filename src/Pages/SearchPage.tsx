@@ -10,14 +10,14 @@ import Footer from '../Components/Footer';
  * Component containing all objects of the app representing the whole page 
  * @component
  */
-const SearchPage = () => {
+const SearchPage = ({ email }: any) => {
 
   const openedSpinner = useSelector(opened);
 
   return (
         <Grid container direction="column" justifyItems="start" justifyContent="space-around" rowSpacing={3} wrap="nowrap">
             <Grid item>
-                <Header />
+                <Header email={email}/>
             </Grid>
              <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

@@ -15,7 +15,7 @@ import { resetStorage } from '../Authentication/storage';
 /**
  * General component presenting the header of the app.
  */
-const Header = () => {
+const Header = ({email}: any) => {
 
   /**
   * the state of the confirmation modal
@@ -63,7 +63,7 @@ const Header = () => {
             <Grid item>
               <Grid container justifyContent='flex-end' alignItems="center">
                 <AccountCircleIcon />
-                <Typography>test@test.com</Typography>
+                <Typography>{email}</Typography>
                 <Divider style={{ background: 'white' }}  orientation="vertical" variant="middle" flexItem />
                 <Tooltip title="Log out">
                   <IconButton

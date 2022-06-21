@@ -2,12 +2,12 @@ import LoginForm from "../Components/Forms/LoginForm"
 import { useState } from "react"
 import ChangePasswordForm from "../Components/Forms/ChangePasswordForm"
 
-const LoginPage = () => {
+const LoginPage = ({setEmail}: any) => {
 
     const [user, setUser] = useState()
 
     return (
-        user ? <ChangePasswordForm user={user}/> : <LoginForm setUser={setUser}/>
+        user ? <ChangePasswordForm user={user}/> : <LoginForm setEmail={setEmail} setUser={setUser}/>
         
     )
 }
