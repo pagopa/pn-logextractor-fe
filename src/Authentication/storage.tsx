@@ -13,7 +13,9 @@ const deleteStorage = (name: string) => {
 }
 
 const resetStorage = () => {
-    sessionStorage.clear()
+    return new Promise((resolve, reject) => {
+        return resolve(sessionStorage.clear())
+    })
 }
 
 const getStorage = (item: string) => {

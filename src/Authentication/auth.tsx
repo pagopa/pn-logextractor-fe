@@ -46,9 +46,8 @@ const login = ({ email, password }: Props): Promise<any> => {
  */
 const logout = async(): Promise<any> => {
     return Auth.signOut()
-        .then(res => {
-            resetStorage();
-            return res;
+        .then(async (res) => {
+            await resetStorage().then(res => res)
         })
         .catch((error: any) => {
                 throw error;
