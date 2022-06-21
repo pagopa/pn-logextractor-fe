@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { getLogsProcessesType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType, getOperatorsLogsType, getPersonBasicDataType, getPersonsLogsType } from "./apiRequestTypes";
+import { getLogsProcessesType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType, getOperatorsLogsType, getPersonIdType, getPersonsLogsType, getPersonTaxIdType } from "./apiRequestTypes";
 
 const headers: Readonly<Record<string, string | boolean>> = {
   Accept: "*/*",
@@ -21,8 +21,8 @@ class Http {
     });
 
     http.interceptors.response.use(
-      (response) => response,
-      (error) => {
+      (response: any) => response,
+      (error: any) => {
         throw error;
       }
     );
@@ -31,8 +31,12 @@ class Http {
     return http;
   }
 
-  getPersonBasicData<T = any, R = AxiosResponse<T>>(payload: getPersonBasicDataType): Promise<R> {
-    return this.http.get<T, R>("/persons/basicData", { params: payload })
+  getPersonTaxId<T = any, R = AxiosResponse<T>>(payload: getPersonTaxIdType): Promise<R> {
+    return this.http.post<T, R>("/persons/tax-id", payload)
+  }
+
+  getPersonId<T = any, R = AxiosResponse<T>>(payload: getPersonIdType): Promise<R> {
+    return this.http.post<T, R>("/persons/person-id", payload)
   }
 
   getPersonsLogs<T = any, R = AxiosResponse<T>>(payload: getPersonsLogsType): Promise<R> {
@@ -49,10 +53,6 @@ class Http {
 
   getNotificationsMonthlyStatsLogs<T = any, R = AxiosResponse<T>>(payload: getNotificationsMonthlyStatsLogsType): Promise<R> {
     return this.http.post<T, R>("logs/notifications/monthly", payload)
-  }
-
-  getLogsPasswords<T = any, R = AxiosResponse<T>>(): Promise<R> {
-    return this.http.get<T, R>("logs/passwords")
   }
 
   getLogsProcesses<T = any, R = AxiosResponse<T>>(payload: getLogsProcessesType): Promise<R> {

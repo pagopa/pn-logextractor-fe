@@ -1,15 +1,14 @@
 // import { apiClient } from "./apiClient";
 import { getLogsProcessesType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType, 
-    getOperatorsLogsType, getPersonBasicDataType, getPersonsLogsType } from "./apiRequestTypes";
+    getOperatorsLogsType,  getPersonIdType, getPersonTaxIdType, getPersonsLogsType } from "./apiRequestTypes";
 import { http as apiClient } from "./axiosClient"
-import { base64StringToBlob } from "blob-util";
 
 /**
- * Return the person's fiscal code or ID depending on the input received
- * @param {getPersonBasicDataType} data 
+ * Return the person's ID depending on the input received
+ * @param {getPersonIdType} data 
  */
-const getPersonBasicData = async (payload: getPersonBasicDataType)  => {
-    return await apiClient.getPersonBasicData(payload)
+const getPersonId = async (payload: getPersonIdType)  => {
+    return await apiClient.getPersonId(payload)
         .then((result) => {
             return result
         })
@@ -17,6 +16,21 @@ const getPersonBasicData = async (payload: getPersonBasicDataType)  => {
             throw error;
         })  
 }
+
+/**
+ * Return the person's fiscal code depending on the input received
+ * @param {getPersonTaxIdType} data 
+ */
+const getPersonTaxId = async (payload: getPersonTaxIdType)  => {
+    return await apiClient.getPersonTaxId(payload)
+        .then((result) => {
+            return result
+        })
+        .catch((error: any) => {
+            throw error;
+        })  
+}
+
 /**
  * Download the logs' archive related to a person's own activities or on a notification
  * @param {getPersonsLogsType} data 
@@ -87,5 +101,5 @@ const getLogsProcesses = async (data: getLogsProcessesType) => {
     }) 
 }
 
-export default { getPersonBasicData, getPersonsLogs, getOperatorsLogs,
+export default { getPersonId, getPersonTaxId, getPersonsLogs, getOperatorsLogs,
     getNotificationsInfoLogs, getNotificationsMonthlyStatsLogs, getLogsProcesses }

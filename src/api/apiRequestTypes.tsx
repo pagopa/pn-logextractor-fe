@@ -1,11 +1,17 @@
 /**
- * @typedef {Object} getPersonBasicDataType
+ * @typedef {Object} getPersonIdType
  */
-type getPersonBasicDataType = {
+type getPersonIdType = {
     recipientType: string;
-    ticketNumber?: string | undefined;
-    taxId?: string | undefined;
-    personId?: string | undefined;
+    ticketNumber: string | undefined;
+    taxId: string | undefined;
+}
+
+/**
+ * @typedef {Object} getPersonTaxIdType
+ */
+type getPersonTaxIdType = {
+    personId: string | undefined;
 }
 
 /**
@@ -58,4 +64,4 @@ type getLogsProcessesType = {
     dateTo: string;
 }
 
-export type { getPersonBasicDataType, getPersonsLogsType, getOperatorsLogsType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType, getLogsProcessesType }
+export type { getPersonIdType, getPersonTaxIdType, getPersonsLogsType, getOperatorsLogsType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType, getLogsProcessesType }

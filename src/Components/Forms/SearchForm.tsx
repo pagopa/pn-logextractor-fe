@@ -6,7 +6,7 @@ import moment from 'moment';
 import apiRequests from "../../api/apiRequests";
 import {
     getLogsProcessesType, getNotificationsInfoLogsType, getNotificationsMonthlyStatsLogsType,
-    getPersonBasicDataType, getPersonsLogsType
+    getPersonsLogsType, getPersonIdType, getPersonTaxIdType
 } from "../../api/apiRequestTypes";
 import * as snackbarActions from "../../redux/snackbarSlice";
 import * as responseActions from "../../redux/responseSlice";
@@ -226,8 +226,10 @@ const SearchForm = () => {
         let request = undefined;
         switch (selectedValue) {
             case "Ottieni EncCF":
+                request = apiRequests.getPersonId(payload as getPersonIdType)
+                break;
             case "Ottieni CF":
-                request = apiRequests.getPersonBasicData(payload as getPersonBasicDataType)
+                request = apiRequests.getPersonTaxId(payload as getPersonTaxIdType)
                 break;
             case "Ottieni notifica":
                 request = apiRequests.getNotificationsInfoLogs(payload as getNotificationsInfoLogsType)
