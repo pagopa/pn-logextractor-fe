@@ -27,6 +27,17 @@ class Http {
       }
     );
 
+    http.interceptors.request.use(
+      (request: any) => {
+          const token = sessionStorage.getItem("token")
+          request.headers = {
+            ...request.headers, 
+            Authorization: `Bearer ${token}`
+          } 
+        return request
+      }
+    );
+
     this.instance = http;
     return http;
   }
