@@ -54,18 +54,17 @@ const logout = async(): Promise<any> => {
             })
 }
 
-const refreshToken = async () => {
-    try {
-        const cognitoUser = await Auth.currentAuthenticatedUser();
-        // This method will automatically refresh the accessToken and idToken if tokens are expired
-        const currentSession = await Auth.currentSession(); 
-        const refreshToken =  currentSession.getRefreshToken();         
-            cognitoUser.refreshSession(refreshToken, (err: any, session: any) => {
-                console.log('session', err, session);
-            });
-        } catch (e) {
-            console.log('Unable to refresh Token', e);
-        }
+const refreshToken = async (): Promise<any> => {
+    
+        await Auth.currentAuthenticatedUser().then((user:CognitoUser) => {
+            const refreshToken = user.getSignInUserSession()?.getRefreshToken();
+            user.refreshSession(refreshToken!, (err, session) => {
+                console.log(user.getSignInUserSession()?.getAccessToken().getJwtToken())  
+            });      
+       })
+       .catch((error: any) => {
+            throw error;
+        })
 }
 
 
