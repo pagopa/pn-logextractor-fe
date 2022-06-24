@@ -14,7 +14,7 @@ import { errorMessages } from "../helpers/messagesConstants"
  */
 let MenuItems: {[key: string]: Array<string>} = {
     "Ottieni EncCF": ["ticketNumber", "taxId", "recipientType"],
-    "Ottieni CF": ["personId", "recipientType"],
+    "Ottieni CF": ["personId"],
     "Ottieni notifica": ["ticketNumber","iun"],
     "Ottieni notifiche di una PA": ["ticketNumber", "ipaCode", "referenceMonth"],
     // use case 9 dissabled for now
