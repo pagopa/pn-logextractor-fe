@@ -140,7 +140,11 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             label: "IUN",
             hidden: false,
             rules: {
-                required: errorMessages.REQUIRED
+                required: errorMessages.REQUIRED,
+                pattern: {
+                    value: regex.IUN,
+                    message: errorMessages.INCORRECT
+                },
             },
             required: false
     },
