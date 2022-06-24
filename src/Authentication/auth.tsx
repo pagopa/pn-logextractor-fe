@@ -27,7 +27,7 @@ const login = ({ email, password }: Props): Promise<any> => {
             if(user.challengeName === "NEW_PASSWORD_REQUIRED"){
                 return await setStorage("session", user.Session).then(() => user)
             }else{
-                    const token = user.signInUserSession.accessToken.jwtToken;
+                    const token = user.signInUserSession.idToken.jwtToken;
                     const refreshToken = user.signInUserSession.refreshToken.token;
                     return await Promise.allSettled([
                         setStorage("token", token),
@@ -55,11 +55,12 @@ const logout = async(): Promise<any> => {
 }
 
 const refreshToken = async (): Promise<any> => {
-    
         await Auth.currentAuthenticatedUser().then((user:CognitoUser) => {
             const refreshToken = user.getSignInUserSession()?.getRefreshToken();
             user.refreshSession(refreshToken!, (err, session) => {
-                console.log(user.getSignInUserSession()?.getAccessToken().getJwtToken())  
+                const token = user.getSignInUserSession()?.getIdToken().getJwtToken();
+                setStorage("token", token!)
+                console.log(user)
             });      
        })
        .catch((error: any) => {
@@ -79,7 +80,7 @@ const changePassword = (user: any, newPassword: string): Promise<any> => {
     return Auth.completeNewPassword(user, newPassword)
         .then(async (user:any) => {
                 console.log(user);
-                const token = user.signInUserSession.accessToken.jwtToken;
+                const token = user.signInUserSession.idToken.jwtToken;
                 const refreshToken = user.signInUserSession.refreshToken.token;
                 return await Promise.allSettled([
                     setStorage("token", token),

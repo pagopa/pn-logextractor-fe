@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 import Footer from '../Components/Footer';
 import { useEffect, useState } from 'react';
-import { refreshToken } from '../Authentication/auth';
+import { logout, refreshToken } from '../Authentication/auth';
+import { useNavigate } from "react-router-dom";
 
 /**
  * Component containing all objects of the app representing the whole page 
@@ -15,14 +16,29 @@ import { refreshToken } from '../Authentication/auth';
  */
 const SearchPage = ({ email }: any) => {
 
+  const navigate = useNavigate();
+  
   const openedSpinner = useSelector(opened);
 
   useEffect(() => {
-    const interval = setInterval(async() => {
+    const idTokenInterval = setInterval(async() => {
         await refreshToken().then(res => console.log(res))
     }, 3540000);
-    // 3540000 = 59 minutes
-    return () => clearInterval(interval); 
+    // 3 540 000 = 59 minutes
+    const refreshTokenInterval = setInterval(async() => {
+        await logout()
+            .then(() => {
+                navigate("/");
+            })
+            .catch((error: any) => {
+                throw error;
+            })
+    }, 36000000);
+    // 36 000 000 = 10 hours
+    return () => {
+        clearInterval(idTokenInterval);
+        clearInterval(refreshTokenInterval);
+    } 
   }, [])
 
   return (
