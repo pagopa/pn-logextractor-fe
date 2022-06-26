@@ -11,12 +11,9 @@ import { reducer } from "./testReducer";
 
 describe('SearchForm', () => {
 
-  let mockOnClick: any;
-
   afterEach(cleanup);
 
     beforeEach(() => {
-        mockOnClick = jest.fn()
         reducer(<SearchForm />)
     });
 
@@ -53,6 +50,20 @@ describe('SearchForm', () => {
             });
         expect(button).toBeTruthy();
         expect(button).toHaveAttribute('disabled');
+    });
+
+    it("fill fields and click ricerca", async () => {
+        const ticketNumber = document.querySelector("input[id='Numero Ticket']");
+        const fiscalCode = document.querySelector("input[id='Codice Fiscale']");
+        fireEvent.change(ticketNumber!, { target: { value: "abc" } });
+        fireEvent.change(fiscalCode!, { target: { value: "MLLSNT82P65Z404U" } });
+        const button = screen.getByRole("button", {
+                name: 'Ricerca',
+            });
+        act(() => button.click());
+        await waitFor(() => {
+            expect(button).not.toHaveClass("Mui-disabled");
+      });
     });
 });
 

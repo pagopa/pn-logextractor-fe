@@ -21,7 +21,7 @@ describe('LoginForm', () => {
       expect(document.querySelector("form")).toBeTruthy()
     });
 
-    it("renders input fields", async () => {
+    it("renders input fields", () => {
       const email = document.querySelector("input[id='Email']");
       const password = document.querySelector("input[id='Password']");
       expect(email).toBeTruthy();
@@ -42,7 +42,7 @@ describe('LoginForm', () => {
         });
     });
 
-    it("fill fields", async () => {
+    it("fill fields", () => {
       const email = document.querySelector("input[id='Email']");
       const password = document.querySelector("input[id='Password']");
       fireEvent.change(email!, { target: { value: "test@test.com" } });
@@ -51,11 +51,16 @@ describe('LoginForm', () => {
       expect(password).toHaveValue("I7ph_KKSq+ouL^$7");
     });
 
-    it('renders tooltip', async() => {
-      screen.getByText("Password dimenticata?").click();
-      await waitFor(() => {
-            expect(screen.getByRole("tooltip")).toBeTruthy();
-        });
+    it('renders tooltip', () => {
+      act(async() => {
+        screen.getByText("Password dimenticata?").click();
+        await waitFor(() => {
+              expect(screen.getByRole("tooltip")).toBeTruthy();
+              const email = document.querySelector("input[id='Email']");
+              fireEvent.focus(email!);
+              expect(screen.getByRole("tooltip")).toBeFalsy();
+          });
+      })
     });
 
 });

@@ -23,74 +23,77 @@ describe('Header Component', () => {
     expect(screen.getByRole("banner")).toBeDefined();
   });
 
-  // it('renders header items', () => {
-  //   const result = render(
-  //       <Router>
-  //           <Header email={email}/>
-  //       </Router>
-  //   );
-  //   const textItems = result.container.querySelectorAll(".MuiTypography-body1")
-  //   expect(textItems).toHaveLength(2);
-  //   expect(textItems[0]).toHaveTextContent("PagoPA S.p.A.");
-  //   expect(textItems[1]).toHaveTextContent(email);
-  //   const button = result.container.querySelector("button");
-  //   expect(button).toBeDefined();
-  //   const icon = result.container.querySelector("svg");
-  //   expect(icon).toBeDefined();
-  // });
+  it('renders header items', () => {
+    const result = render(
+        <Router>
+            <Header email={email}/>
+        </Router>
+    );
+    const textItems = result.container.querySelectorAll(".MuiTypography-body1")
+    expect(textItems).toHaveLength(2);
+    expect(textItems[0]).toHaveTextContent("PagoPA S.p.A.");
+    expect(textItems[1]).toHaveTextContent(email);
+    const button = result.container.querySelector("button");
+    expect(button).toBeDefined();
+    const icon = result.container.querySelector("svg");
+    expect(icon).toBeDefined();
+  });
 
-  // it('simulate log out button click', async () => {
-  //   const result = render(
-  //       <Router>
-  //           <Header email={email}/>
-  //       </Router>
-  //   );
-  //   const button = screen.getAllByRole("button")[0];
-  //   await act(async() => {
-  //     button.click();
-  //     await waitFor(async () => {
-  //       const modal = result.container.querySelector(".uiDialog-container");
-  //       expect(modal).toBeDefined();
-  //       if(modal){
-  //         within(modal as HTMLElement).findAllByRole("button").then(async buttons => {
-  //           expect(buttons).toHaveLength(2);
-  //           buttons[0].click();
-  //             await waitFor(() => {
-  //             expect(modal).toBeUndefined();
-  //           })
-  //         })
-  //       }
-  //     });
-  //   })
+  it('simulate log out button click', async () => {
+    const result = render(
+        <Router>
+            <Header email={email}/>
+        </Router>
+    );
+    const button = screen.getAllByRole("button")[0];
+    await act(async() => {
+      button.click();
+      await waitFor(async () => {
+        const modal = result.container.querySelector(".uiDialog-container");
+        expect(modal).toBeDefined();
+        if(modal){
+          within(modal as HTMLElement).findAllByRole("button").then(async buttons => {
+            expect(buttons).toHaveLength(2);
+            buttons[0].click();
+              await waitFor(() => {
+              expect(modal).toBeUndefined();
+            })
+          })
+        }
+      });
+    })
     
-  // })
+  })
 
-  // it('simulate log out', async () => {
-  //  jest.setTimeout(10000)
-  //  const result = render(
-  //      <Router>
-  //          <Header email={email}/>
-  //      </Router>
-  //  );
-  //  const button = screen.getAllByRole("button")[0];
-  //  await act(async() => {
-  //    button.click();
-  //    await waitFor(async () => {
-  //      const modal = result.container.querySelector(".uiDialog-container");
-  //      expect(modal).toBeDefined();
-  //      if(modal){
-  //         within(modal as HTMLElement).findAllByRole("button").then(async buttons => {
-  //           expect(buttons).toHaveLength(2);
-  //           buttons[1].click();
-  //             await waitFor(() => {
-  //               expect(modal).toBeUndefined();
-  //               expect(result).toBeUndefined();
-  //           })
-  //         })
-  //       }
-  //    });
-  //  })
-  // })
+  it('simulate log out', async () => {
+
+   jest.setTimeout(10000)
+   const result = render(
+       <Router>
+           <Header email={email}/>
+       </Router>
+   );
+   const button = screen.getAllByRole("button")[0];
+   await act(async() => {
+     button.click();
+     await waitFor(async () => {
+       const modal = result.container.querySelector(".uiDialog-container");
+       expect(modal).toBeDefined();
+       if(modal){
+          within(modal as HTMLElement).findAllByRole("button").then(async buttons => {
+            expect(buttons).toHaveLength(2);
+            expect(buttons[1].textContent).toEqual("Esci");
+            buttons[1].click();
+              await waitFor(() => {
+                expect(window.location.pathname).toBe("/");
+                expect(modal).toBeUndefined();
+                expect(result).toBeUndefined();
+            })
+          })
+        }
+     });
+   })
+  })
 
 });
  
