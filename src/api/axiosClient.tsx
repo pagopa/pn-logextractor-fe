@@ -30,14 +30,15 @@ class Http {
     http.interceptors.request.use(
       (request: any) => {
           const token = sessionStorage.getItem("token")
+          const accessToken = sessionStorage.getItem("accessToken")
           request.headers = {
             ...request.headers, 
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            Auth: accessToken
           } 
         return request
       }
     );
-
     this.instance = http;
     return http;
   }
