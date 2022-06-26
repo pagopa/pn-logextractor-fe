@@ -29,9 +29,11 @@ const login = ({ email, password }: Props): Promise<any> => {
             }else{
                     const token = user.signInUserSession.idToken.jwtToken;
                     const refreshToken = user.signInUserSession.refreshToken.token;
+                    const accessToken = user.signInUserSession.accessToken.jwtToken
                     return await Promise.allSettled([
                         setStorage("token", token),
-                        setStorage("refreshToken", refreshToken)
+                        setStorage("refreshToken", refreshToken),
+                        setStorage("accessToken", accessToken)
                     ]).then(() => user)
             }
         })
@@ -59,7 +61,9 @@ const refreshToken = async (): Promise<any> => {
             const refreshToken = user.getSignInUserSession()?.getRefreshToken();
             user.refreshSession(refreshToken!, (err, session) => {
                 const token = user.getSignInUserSession()?.getIdToken().getJwtToken();
+                const accessToken = user.getSignInUserSession()?.getAccessToken().getJwtToken();
                 setStorage("token", token!)
+                setStorage("accessToken", accessToken!)
                 console.log(user)
             });      
        })
