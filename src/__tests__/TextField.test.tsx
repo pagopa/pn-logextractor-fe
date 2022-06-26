@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store'
 import TextFieldComponent from '../Components/TextFieldComponent';
 
-describe('Header Component', () => {
+describe('Testfield Component', () => {
     let field;
     beforeEach(() => {
         field =  {
@@ -22,7 +22,7 @@ describe('Header Component', () => {
     });
 
     it('renders', () => {    
-    const component = document.querySelector("#IPA Code");
+    const component = document.getElementById("IPA Code");
         expect(component).toBeInTheDocument();
     });
 
