@@ -90,6 +90,7 @@ describe('Api requests tests', () => {
         const payload:getNotificationsMonthlyStatsLogsType = {
             ticketNumber: "abc",
             ipaCode: 0,
+            referenceMonth:"2022-05"
         }
         const request = apiRequests.getNotificationsMonthlyStatsLogs(payload)
         expect(await request).toFa();
@@ -135,7 +136,7 @@ describe('Api requests tests', () => {
         expect(await request).toThrowError();
     });
 
-    it('getOperatorsLogs', async() => {
+    /*it('getOperatorsLogs', async() => {
         const payload:getOperatorsLogsType = {
             ticketNumber: "abc",
             taxId: "MLLSNT82P65Z404U",
@@ -145,9 +146,9 @@ describe('Api requests tests', () => {
         const request = apiRequests.getOperatorsLogs(payload)
         const res = await request;
         expect(res).toMatchObject({"data": expect.any(String)})
-    });
+    });*/
 
-    it('getOperatorsLogs with errors', async() => {
+    /*it('getOperatorsLogs with errors', async() => {
         const payload = {
             ticketNumber: "abc",
             taxId: "MLLSNT82P65Z404U",
@@ -155,5 +156,5 @@ describe('Api requests tests', () => {
         }
         const request = apiRequests.getOperatorsLogs(payload as getOperatorsLogsType)
         expect(await request).toThrowError();
-    });
+    });*/
 });

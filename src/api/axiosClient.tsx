@@ -55,9 +55,9 @@ class Http {
     return this.http.post<T, R>("logs/persons", payload)
   }
 
-  getOperatorsLogs<T = any, R = AxiosResponse<T>>(payload: getOperatorsLogsType): Promise<R> {
+  /*getOperatorsLogs<T = any, R = AxiosResponse<T>>(payload: getOperatorsLogsType): Promise<R> {
     return this.http.post<T, R>("logs/operators", payload )
-  }
+  }*/
 
   getNotificationsInfoLogs<T = any, R = AxiosResponse<T>>(payload: getNotificationsInfoLogsType): Promise<R> {
     return this.http.post<T, R>("logs/notifications/info", payload)

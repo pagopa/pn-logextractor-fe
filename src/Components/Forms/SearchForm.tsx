@@ -114,6 +114,7 @@ const SearchForm = () => {
      * "Ottieni log completi" so some fields are hidden and some are shown according
      * to which fields are filled 
      */
+    /* istanbul ignore next */
     useEffect(() => {
         let neededFields: string[] = []
         disableRicerca();
@@ -297,6 +298,7 @@ const SearchForm = () => {
      * downloading zip file 
      * @param zip file in base64
      */
+    /* istanbul ignore next */
     const downloadZip = (zip: string) => {
         var file = base64StringToBlob(zip, "application/zip");
         var fileURL = URL.createObjectURL(file);

@@ -50,7 +50,7 @@ const getPersonsLogs = async (data: getPersonsLogsType) => {
  * Download the logs' archive related to a person activities and its operators' ones
  * @param {getOperatorsLogsType} data 
  */
-const getOperatorsLogs = async (data: getOperatorsLogsType) => {
+/*const getOperatorsLogs = async (data: getOperatorsLogsType) => {
     return await apiClient.getOperatorsLogs(data)
         .then((result: any) => {
             return result;
@@ -58,7 +58,7 @@ const getOperatorsLogs = async (data: getOperatorsLogsType) => {
         .catch((error: any) => {
             throw error;
         })  
-}
+}*/
 
 /**
  * Download the logs' archive containing the full info of a notification
@@ -101,5 +101,5 @@ const getLogsProcesses = async (data: getLogsProcessesType) => {
     }) 
 }
 
-export default { getPersonId, getPersonTaxId, getPersonsLogs, getOperatorsLogs,
+export default { getPersonId, getPersonTaxId, getPersonsLogs, /*getOperatorsLogs,*/
     getNotificationsInfoLogs, getNotificationsMonthlyStatsLogs, getLogsProcesses }

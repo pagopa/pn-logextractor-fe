@@ -67,6 +67,7 @@ const DateRangePickerComponent = (props: Props) => {
      * @param value  the selected date 
      * @param field which field is changed
      */
+    /* istanbul ignore next */
     const handleChange = (value: any, field:string) => {
         value = moment(value).format("YYYY-MM-DD")
         let prevState = [...dates];
