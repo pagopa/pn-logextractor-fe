@@ -223,6 +223,7 @@ const SearchForm = () => {
      * Create request depending on the use case
      * @param payload the request paylod
      */
+    /* istanbul ignore next */
     const createRequest = (payload: any) => {
         let request = undefined;
         switch (selectedValue) {

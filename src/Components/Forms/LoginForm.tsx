@@ -52,6 +52,7 @@ const LoginForm = ({ setUser, setEmail }: any) => {
      * function handling the form submitting
      * @param data the data from the form
      */
+    /* istanbul ignore next */
     const onSubmit = async (data: { [x: string]: string; }) => {
         setEmail(data.email)
         await login({email: data.email, password: data.password})
