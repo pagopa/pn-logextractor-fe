@@ -21,6 +21,7 @@ const getPersonId = async (payload: getPersonIdType)  => {
  * Return the person's fiscal code depending on the input received
  * @param {getPersonTaxIdType} data 
  */
+
 const getPersonTaxId = async (payload: getPersonTaxIdType)  => {
     return await apiClient.getPersonTaxId(payload)
         .then((result) => {

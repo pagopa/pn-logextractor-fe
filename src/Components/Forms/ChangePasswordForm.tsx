@@ -50,6 +50,7 @@ const ChangePasswordForm = ({ user }: any) => {
      * function handling the form submitting
      * @param data the data from the form
      */
+    /* istanbul ignore next */
     const onSubmit = async (data: { [x: string]: string; }) => {
         await changePassword(user, data.newPassword).then(res => {
             console.log(res)
@@ -59,7 +60,6 @@ const ChangePasswordForm = ({ user }: any) => {
             dispatch(snackbarActions.updateSnackbacrOpened(true))
             dispatch(snackbarActions.updateStatusCode("400"))
         })
-        
     }
 
     return (

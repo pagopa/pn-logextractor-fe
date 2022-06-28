@@ -41,6 +41,7 @@ const Header = ({email}: any) => {
   /**
   * Function handling the logging out
   */
+ /* istanbul ignore next */
   const handleLogOut = () => {
     logout()
       .then(() => {

@@ -19,7 +19,7 @@ const SearchPage = ({ email }: any) => {
   const navigate = useNavigate();
   
   const openedSpinner = useSelector(opened);
-
+  /* istanbul ignore next */
   useEffect(() => {
     const idTokenInterval = setInterval(async() => {
         await refreshToken().then(res => console.log(res))

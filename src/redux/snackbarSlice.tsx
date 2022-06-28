@@ -10,7 +10,7 @@ const initialState: SnackbarState = {
   opened: false,
   statusCode: undefined
 }
-
+/* istanbul ignore next */
 export const snackbarSlice = createSlice({
   name: 'snackbar',
   initialState,
