@@ -138,6 +138,8 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             name: "iun",
             componentType: "textfield",
             label: "IUN",
+            inputProps: { maxLength: 25 },
+            size: "30%",
             hidden: false,
             rules: {
                 required: errorMessages.REQUIRED,
