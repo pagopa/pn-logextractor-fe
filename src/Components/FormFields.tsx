@@ -173,10 +173,10 @@ let FieldsProperties: {[key: string]: FieldsProps} = {
             },
             required: false
     },
-    "IPA Code": {
+    "Codice IPA": {
             name: "ipaCode",
             componentType: "textfield",
-            label: "IPA Code",
+            label: "Codice IPA",
             hidden: false,
             rules: {
                 required: errorMessages.REQUIRED

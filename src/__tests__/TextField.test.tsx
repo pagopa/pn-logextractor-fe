@@ -15,7 +15,7 @@ describe('Testfield Component', () => {
         field =  {
                 name: "ipaCode",
                 componentType: "textfield",
-                label: "IPA Code",
+                label: "Codice IPA",
                 hidden: false,
                 rules: {
                     required: "Error"
@@ -26,7 +26,7 @@ describe('Testfield Component', () => {
     });
 
     it('renders', () => {    
-    const component = document.getElementById("IPA Code");
+    const component = document.getElementById("Codice IPA");
         expect(component).toBeInTheDocument();
     });
 

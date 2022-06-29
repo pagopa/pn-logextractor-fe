@@ -19,7 +19,7 @@ global.sessionStorage = sessionStorageMock as unknown as Storage;
 describe('Api requests tests', () => {
 
 
-    it('getPersonId', async() => {
+    /*it('getPersonId', async() => {
         const payload: getPersonIdType = {
             recipientType: "PG",
             ticketNumber: "abc",

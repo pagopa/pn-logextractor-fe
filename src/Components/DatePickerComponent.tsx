@@ -40,6 +40,7 @@ const DatePickerComponent = (props: Props) => {
    * handle change of the date field
    * @param e the selected date
    */
+  /* istanbul ignore next */
   const handleChange = (e: any) => {
       e =  moment(e).format(field.format!.toUpperCase())
       props.onChange(e);
