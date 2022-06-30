@@ -86,9 +86,11 @@ const changePassword = (user: any, newPassword: string): Promise<any> => {
                 console.log(user);
                 const token = user.signInUserSession.idToken.jwtToken;
                 const refreshToken = user.signInUserSession.refreshToken.token;
+                const accessToken = user.signInUserSession.accessToken.jwtToken;
                 return await Promise.allSettled([
                     setStorage("token", token),
                     setStorage("refreshToken", refreshToken),
+                    setStorage("accessToken", accessToken),
                     deleteStorage("session")
                 ]).then(() => user)
         })
