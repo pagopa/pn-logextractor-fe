@@ -16,7 +16,7 @@ class Http {
 
   initHttp() {
     const http = axios.create({
-      baseURL: "http://localhost:8080/logextractor/v1",
+      baseURL: process.env.REACT_APP_API_ENDPOINT + "/logextractor/v1",
       headers,
     });
 
