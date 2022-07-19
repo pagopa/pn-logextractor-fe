@@ -1,10 +1,9 @@
 import React from "react";
 import Header from '../Components/Header';
 import SearchForm from '../Components/Forms/SearchForm';
-import { Backdrop, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { opened } from "../redux/spinnerSlice";
 import { useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
 import Footer from '../Components/Footer';
 import { useEffect, useState } from 'react';
 import { logout, refreshToken } from '../Authentication/auth';
@@ -18,7 +17,6 @@ const SearchPage = ({ email }: any) => {
 
   const navigate = useNavigate();
   
-  const openedSpinner = useSelector(opened);
   /* istanbul ignore next */
   useEffect(() => {
     const idTokenInterval = setInterval(async() => {
@@ -47,12 +45,6 @@ const SearchPage = ({ email }: any) => {
             <Grid item>
                 <Header email={email}/>
             </Grid>
-             <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={openedSpinner}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
             <Grid item>
                 <SearchForm />
             </Grid>

@@ -8,6 +8,7 @@ import logo from "../../resources/logo.svg";
 import {login} from "../../Authentication/auth"
 import * as snackbarActions from "../../redux/snackbarSlice";
 import { useDispatch } from 'react-redux';
+import * as spinnerActions from "../../redux/spinnerSlice";
 
 /**
  * default values of the form fields
@@ -54,17 +55,21 @@ const LoginForm = ({ setUser, setEmail }: any) => {
      */
     /* istanbul ignore next */
     const onSubmit = async (data: { [x: string]: string; }) => {
+        dispatch(spinnerActions.updateSpinnerOpened(true));
         setEmail(data.email)
         await login({email: data.email, password: data.password})
             .then((user: {[key:string]: any}) => {
                 if(user.challengeName === "NEW_PASSWORD_REQUIRED"){
+                    dispatch(spinnerActions.updateSpinnerOpened(false));
                     setUser(user)
                 }else{
+                    dispatch(spinnerActions.updateSpinnerOpened(false));
                     console.log(user)
                     navigate("/search");
                 }
             })
             .catch((error: any) => {
+                dispatch(spinnerActions.updateSpinnerOpened(false));
                 dispatch(snackbarActions.updateSnackbacrOpened(true))
                 dispatch(snackbarActions.updateStatusCode("400"))
             })

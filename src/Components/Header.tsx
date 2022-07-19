@@ -11,7 +11,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import logo_pagopa_bianco from "../resources/logo_pagopa_bianco.svg";
 import {logout} from "../Authentication/auth"
 import { resetStorage } from '../Authentication/storage';
-
+import { useDispatch } from 'react-redux';
+import * as spinnerActions from "../redux/spinnerSlice";
 /**
  * General component presenting the header of the app.
  */
@@ -23,6 +24,11 @@ const Header = ({email}: any) => {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+
+   /**
+    * dispatch redux actions
+    */
+  const dispatch = useDispatch();
 
   /**
   * Function closing the confirmation modal
@@ -43,11 +49,15 @@ const Header = ({email}: any) => {
   */
  /* istanbul ignore next */
   const handleLogOut = () => {
+    setOpen(false);
+    dispatch(spinnerActions.updateSpinnerOpened(true));
     logout()
       .then(() => {
+        dispatch(spinnerActions.updateSpinnerOpened(false));
         navigate("/");
       })
       .catch((error: any) => {
+        dispatch(spinnerActions.updateSpinnerOpened(false));
         throw error;
       })
     

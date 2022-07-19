@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import * as snackbarActions from "../../redux/snackbarSlice";
 import { deleteStorage, resetStorage } from "../../Authentication/storage";
 import { CognitoUser } from "@aws-amplify/auth";
+import * as spinnerActions from "../../redux/spinnerSlice";
 
 /**
  * default values of the form fields
@@ -52,11 +53,14 @@ const ChangePasswordForm = ({ user }: any) => {
      */
     /* istanbul ignore next */
     const onSubmit = async (data: { [x: string]: string; }) => {
+        dispatch(spinnerActions.updateSpinnerOpened(true));
         await changePassword(user, data.newPassword).then(res => {
+            dispatch(spinnerActions.updateSpinnerOpened(false));
             console.log(res)
             navigate("/search");
         })
         .catch((error: any) => {
+            dispatch(spinnerActions.updateSpinnerOpened(false));
             dispatch(snackbarActions.updateSnackbacrOpened(true))
             dispatch(snackbarActions.updateStatusCode("400"))
         })
