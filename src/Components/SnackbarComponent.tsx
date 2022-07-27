@@ -1,7 +1,7 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import Alert from '@mui/material/Alert';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
-import { updateSnackbacrOpened, opened, statusCode } from "../redux/snackbarSlice";
+import { updateSnackbacrOpened, opened, statusCode, message } from "../redux/snackbarSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { infoMessages } from "../helpers/messagesConstants"
 import Slide, { SlideProps } from '@mui/material/Slide';
@@ -48,6 +48,8 @@ const SnackbarComponent = () => {
 
     const status: any = useSelector(statusCode);
 
+    const snackbarMessage: any = useSelector(message);
+
     const dispatch = useDispatch();
 
     /**
@@ -88,7 +90,7 @@ const SnackbarComponent = () => {
         <Alert onClose={handleClose}
            variant="filled" severity={Severity[severity as keyof typeof Severity]}
         >
-          <Typography>{SeverityMessage[severity]}</Typography> 
+          <Typography>{snackbarMessage || SeverityMessage[severity]}</Typography> 
         </Alert>
       </Snackbar>
     )

@@ -254,18 +254,20 @@ const SearchForm = () => {
         if (request) {
             request.then(res => {
                 updateSnackbar(res);
-                updateResponse(
+                if(!res.data.message){
+                    updateResponse(
                     res.data.password ? { password: res.data.password }
                         :
                         selectedValue === "Ottieni CF" ? { taxId: res.data.data } : { internalId: res.data.data }
-                );
-                res.data.zip && downloadZip(res.data.zip);
+                    );
+                    res.data.zip && downloadZip(res.data.zip);
+                }
                 dispatch(spinnerActions.updateSpinnerOpened(false));
             })
-                .catch(error => {
-                    updateSnackbar(error.response);
-                    dispatch(spinnerActions.updateSpinnerOpened(false));
-                })
+            .catch(error => {
+                updateSnackbar(error.response);
+                dispatch(spinnerActions.updateSpinnerOpened(false));
+            })
         }
 
     }
@@ -277,6 +279,7 @@ const SearchForm = () => {
     const updateSnackbar = (response: any) => {
         dispatch(snackbarActions.updateSnackbacrOpened(true))
         dispatch(snackbarActions.updateStatusCode(response.status))
+        response.data.message && dispatch(snackbarActions.updateMessage(response.data.message))
     }
 
     /**

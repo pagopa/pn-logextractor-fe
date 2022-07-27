@@ -3,12 +3,14 @@ import type { RootState } from './store'
 
 export interface SnackbarState {
   opened: boolean,
-  statusCode: any
+  statusCode: any,
+  message: string
 }
 
 const initialState: SnackbarState = {
   opened: false,
-  statusCode: undefined
+  statusCode: undefined,
+  message: ""
 }
 /* istanbul ignore next */
 export const snackbarSlice = createSlice({
@@ -22,13 +24,18 @@ export const snackbarSlice = createSlice({
     updateStatusCode: (state, action: PayloadAction<any>) => {
       state.statusCode = action.payload
     },
+    updateMessage: (state, action: PayloadAction<any>) => {
+      state.message = action.payload
+    },
   },
 })
 
-export const { updateSnackbacrOpened, updateStatusCode, resetState } = snackbarSlice.actions
+export const { updateSnackbacrOpened, updateStatusCode, updateMessage, resetState } = snackbarSlice.actions
 
 export const opened = (state: RootState) => state.snackbar.opened;
 
 export const statusCode = (state: RootState) => state.snackbar.statusCode;
+
+export const message = (state: RootState) => state.snackbar.message;
 
 export default snackbarSlice.reducer
