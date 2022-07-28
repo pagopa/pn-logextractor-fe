@@ -26,7 +26,7 @@ const defaultFormValues: { [key: string]: any } = {
     "personId": "",
     "iun": "",
     "ipaCode": "",
-    "referenceMonth": moment().format("YYYY-MM"),
+    "referenceMonth": moment().utcOffset(0).date(1).set({hour:0,minute:0,second:0,millisecond:0}).toISOString(),
     "Tipo Estrazione": "Ottieni EncCF",
     "recipientType": "PF",
     "deanonimization": false,
