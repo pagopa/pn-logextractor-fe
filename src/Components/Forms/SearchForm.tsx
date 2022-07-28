@@ -216,6 +216,11 @@ const SearchForm = () => {
         if(selectedValue === "Ottieni log completi" && payload.hasOwnProperty("taxId")){
             payload.deanonimization = true
         }
+
+        // use case 6
+        if(payload["referenceMonth"]){
+            payload.endMonth = moment(payload["referenceMonth"]).add(1, "months");
+        }
         return payload;
     }
 
