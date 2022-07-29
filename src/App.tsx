@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import SnackbarComponent from './Components/SnackbarComponent';
+import Page from './Pages/SearchPage'
+import Router from './Router/router';
+import { opened } from "./redux/spinnerSlice";
 
 function App() {
+
+  const openedSpinner = useSelector(opened);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={openedSpinner}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        <Router />
+        <SnackbarComponent />
+      </BrowserRouter>
     </div>
   );
 }
