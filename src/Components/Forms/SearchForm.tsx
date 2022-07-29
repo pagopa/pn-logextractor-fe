@@ -25,7 +25,7 @@ const defaultFormValues: { [key: string]: any } = {
     "taxId": "",
     "personId": "",
     "iun": "",
-    "ipaCode": "",
+    "publicAuthorityName": "",
     "referenceMonth": moment().utcOffset(0).date(1).set({hour:0,minute:0,second:0,millisecond:0}).toISOString(),
     "Tipo Estrazione": "Ottieni EncCF",
     "recipientType": "PF",

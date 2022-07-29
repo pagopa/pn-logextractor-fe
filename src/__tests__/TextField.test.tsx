@@ -13,7 +13,7 @@ describe('Testfield Component', () => {
     let field;
     beforeEach(() => {
         field =  {
-                name: "ipaCode",
+                name: "publicAuthorityName",
                 componentType: "textfield",
                 label: "Codice IPA",
                 hidden: false,

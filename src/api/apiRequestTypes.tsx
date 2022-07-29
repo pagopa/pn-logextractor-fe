@@ -51,7 +51,7 @@ type getNotificationsInfoLogsType = {
  */
 type getNotificationsMonthlyStatsLogsType = {
     ticketNumber: string;
-    ipaCode: number;
+    publicAuthorityName: number;
     referenceMonth: string;
 }
 
